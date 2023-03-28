@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     price: { type: DataTypes.FLOAT, allowNull: false },
     urlImage: { type: DataTypes.STRING, allowNull: false },
   }, { underscored: true, timestamps: false, tableName: 'products' });
-  Product.associate = ({ SalesProducts }) => {
-    Product.belongsToMany(SalesProducts, { foreignKey: 'product_id', as: 'product' });
+  Product.associate = ({ SalesProduct }) => {
+    Product.hasMany(SalesProduct, { foreignKey: 'product_id', as: 'product' });
   };
   return Product;
 };

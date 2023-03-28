@@ -15,11 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     sale(DataTypes),
     { underscored: true, timestamps: false, tableName: 'sales' },
   );
-  Sale.associate = ({ User }) => {
-    Sale.belongsToMany(User, { foreignKey: 'user_id', as: 'user' });
-  };
-  Sale.associate = ({ User }) => {
-    Sale.belongsToMany(User, { foreignKey: 'seller_id', as: 'seller' });
+  Sale.associate = ({ User, SalesProduct }) => {
+    Sale.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+    Sale.belongsTo(User, { foreignKey: 'seller_id', as: 'seller' });
+    Sale.hasMany(SalesProduct, { foreignKey: 'sale_id', as: 'sale' });
   };
   return Sale;
 };
