@@ -3,50 +3,55 @@ import PropTypes from 'prop-types';
 import { loginAPI } from '../services/requests';
 import validateFields from '../utils/validateFields';
 
-class Login extends React.Component {
+class Register extends React.Component {
   state = {
+    username: '',
     email: '',
     password: '',
     invalidUser: false,
     errorMsg: '',
   };
 
-  handleLogin = async (event) => {
+  handleRegister = async (event) => {
     event.preventDefault();
     const { email, password, username } = this.state;
     const invalidFieldsMessage = validateFields(email, password, username);
     if (invalidFieldsMessage !== true) {
       return this.setState({ invalidUser: true, errorMsg: invalidFieldsMessage });
     }
-
     const { history } = this.props;
-    const result = await loginAPI('/login', { email, password });
-    const { error, role, token } = result;
 
+    const { error } = await loginAPI('/register', { username, email, password });
     if (error) {
       return this.setState({ invalidUser: true, errorMsg: error });
     }
-    // setToken(token);
-    localStorage.setItem('token', token);
-    localStorage.setItem('role', role);
 
-    history.push(`/${role}`);
+    history.push('/login');
   };
 
   handleChange = (event) => {
     const { target } = event;
     const { name, value } = target;
-    this.setState({ [name]: value, invalidUser: false });
+    this.setState({ [name]: value });
   };
 
   render() {
-    const { email, password, invalidUser, errorMsg } = this.state;
-    const { history } = this.props;
+    const { username, email, password, invalidUser, errorMsg } = this.state;
     return (
       <div>
+        <h1>Registro</h1>
+        <input
+          type="text"
+          name="username"
+          value={ username }
+          placeholder="nome"
+          onChange={ this.handleChange }
+          data-testid="common_login__input-email"
+        />
         <input
           type="email"
           name="email"
+          required
           value={ email }
           placeholder="email"
           onChange={ this.handleChange }
@@ -55,23 +60,20 @@ class Login extends React.Component {
         <input
           type="password"
           name="password"
-          value={ password }
           placeholder="senha"
+          value={ password }
           onChange={ this.handleChange }
           data-testid="common_login__input-password"
         />
-        <input
-          type="button"
-          value="login"
-          onClick={ this.handleLogin }
-          data-testid="common_login__button-login"
-        />
-        <input
-          type="button"
-          value="Ainda não tenho conta"
-          onClick={ () => history.push('/register') }
+        <button
+          type="submit"
+          value="Cadastrar"
+          onClick={ this.handleRegister }
           data-testid="common_login__button-register"
-        />
+        >
+          Cadastrar
+
+        </button>
         {
           invalidUser && (
             <span
@@ -86,8 +88,8 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+Register.propTypes = {
   history: PropTypes.shape.isRequired,
 };
 
-export default Login;
+export default Register;
