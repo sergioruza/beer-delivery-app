@@ -3,11 +3,11 @@ module.exports = (sequelize, DataTypes) => {
     saleId: { type: DataTypes.INTEGER, allowNull: false, foreignKey: true },
     productId: { type: DataTypes.INTEGER, allowNull: false, foreignKey: true },
     quantity: { type: DataTypes.INTEGER, allowNull: false },
-  }, { underscored: true, timestamps: false, tableName: 'products' });
+  }, { underscored: true, timestamps: false, tableName: 'sales_products' });
   
   SalesProduct.associate = ({ Product, Sale }) => {
-    SalesProduct.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
-    SalesProduct.belongsTo(Sale, { foreignKey: 'sale_id', as: 'sale' });
+    SalesProduct.belongsToMany(Product, { foreignKey: 'product_id', as: 'product' });
+    SalesProduct.belongsToMany(Sale, { foreignKey: 'sale_id', as: 'sales' });
   };
   return SalesProduct;
 };
