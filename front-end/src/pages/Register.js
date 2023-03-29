@@ -57,7 +57,7 @@ class Register extends React.Component {
           value={ username }
           placeholder="nome"
           onChange={ this.handleChange }
-          data-testid="common_login__input-email"
+          data-testid="common_register__input-name"
         />
         <input
           type="email"
@@ -66,7 +66,7 @@ class Register extends React.Component {
           value={ email }
           placeholder="email"
           onChange={ this.handleChange }
-          data-testid="common_login__input-email"
+          data-testid="common_register__input-email"
         />
         <input
           type="password"
@@ -74,14 +74,14 @@ class Register extends React.Component {
           placeholder="senha"
           value={ password }
           onChange={ this.handleChange }
-          data-testid="common_login__input-password"
+          data-testid="common_register__input-password"
         />
         <button
           type="button"
           value="Cadastrar"
           disabled={ loginBtnDisable }
           onClick={ this.handleRegister }
-          data-testid="common_login__button-register"
+          data-testid="common_register__button-register"
         >
           Cadastrar
 
@@ -89,7 +89,7 @@ class Register extends React.Component {
         {
           invalidUser && (
             <span
-              data-testid="common_login__element-invalid-register"
+              data-testid="common_register__element-invalid-register"
             >
               {errorMsg}
             </span>
