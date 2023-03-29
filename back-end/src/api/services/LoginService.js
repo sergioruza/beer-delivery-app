@@ -1,7 +1,7 @@
 const md5 = require('md5');
 const { User } = require('../../database/models');
 const GenericError = require('../../errors/GenericError');
-const generateToken = require('../../token/generateToken');
+const generateToken = require('../token/generateToken');
 
 class LoginService {
   constructor() {
@@ -16,7 +16,7 @@ class LoginService {
     const payload = {
       email: user.email,
       role: user.role,
-      username: user.username,
+      name: user.name,
     };
     const token = await generateToken(payload);
     return { token, role: user.role };
