@@ -1,4 +1,4 @@
-export default class ErrorHandler {
+class ErrorHandler {
   static handle(err, req, res, _next) {
     if (err instanceof Error && err.stack) {
       return res.status(+err.stack).json({ message: err.message });
@@ -6,3 +6,5 @@ export default class ErrorHandler {
     return res.status(500).json({ message: err.message });
   }
 }
+
+module.exports = ErrorHandler;
