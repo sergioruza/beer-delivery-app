@@ -9,15 +9,12 @@ class Login extends React.Component {
     password: '',
     invalidUser: false,
     errorMsg: '',
+    loginBtnDisable: true,
   };
 
   handleLogin = async (event) => {
     event.preventDefault();
-    const { email, password, username } = this.state;
-    const invalidFieldsMessage = validateFields(email, password, username);
-    if (invalidFieldsMessage !== true) {
-      return this.setState({ invalidUser: true, errorMsg: invalidFieldsMessage });
-    }
+    const { email, password } = this.state;
 
     const { history } = this.props;
     const result = await loginAPI('/login', { email, password });
@@ -36,11 +33,19 @@ class Login extends React.Component {
   handleChange = (event) => {
     const { target } = event;
     const { name, value } = target;
-    this.setState({ [name]: value, invalidUser: false });
+    this.setState({ [name]: value }, () => {
+      const { email, password } = this.state;
+      const invalidFieldsMessage = validateFields(email, password);
+      if (invalidFieldsMessage !== true) {
+        return this.setState({
+          invalidUser: true, errorMsg: invalidFieldsMessage, loginBtnDisable: true });
+      }
+      this.setState({ invalidUser: false, loginBtnDisable: false });
+    });
   };
 
   render() {
-    const { email, password, invalidUser, errorMsg } = this.state;
+    const { email, password, invalidUser, errorMsg, loginBtnDisable } = this.state;
     const { history } = this.props;
     return (
       <div>
@@ -63,6 +68,7 @@ class Login extends React.Component {
         <button
           type="button"
           onClick={ this.handleLogin }
+          disabled={ loginBtnDisable }
           data-testid="common_login__button-login"
         >
           Login
