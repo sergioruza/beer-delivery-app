@@ -60,18 +60,20 @@ class Login extends React.Component {
           onChange={ this.handleChange }
           data-testid="common_login__input-password"
         />
-        <input
+        <button
           type="button"
-          value="login"
           onClick={ this.handleLogin }
           data-testid="common_login__button-login"
-        />
-        <input
+        >
+          Login
+        </button>
+        <button
           type="button"
-          value="Ainda não tenho conta"
           onClick={ () => history.push('/register') }
           data-testid="common_login__button-register"
-        />
+        >
+          Ainda não tenho conta
+        </button>
         {
           invalidUser && (
             <span

@@ -66,7 +66,7 @@ class Register extends React.Component {
           data-testid="common_login__input-password"
         />
         <button
-          type="submit"
+          type="button"
           value="Cadastrar"
           onClick={ this.handleRegister }
           data-testid="common_login__button-register"
