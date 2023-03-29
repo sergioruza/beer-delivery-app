@@ -10,15 +10,13 @@ class Register extends React.Component {
     password: '',
     invalidUser: false,
     errorMsg: '',
+    loginBtnDisable: true,
   };
 
   handleRegister = async (event) => {
     event.preventDefault();
     const { email, password, username } = this.state;
-    const invalidFieldsMessage = validateFields(email, password, username);
-    if (invalidFieldsMessage !== true) {
-      return this.setState({ invalidUser: true, errorMsg: invalidFieldsMessage });
-    }
+
     const { history } = this.props;
 
     const { error } = await loginAPI('/register', { username, email, password });
@@ -32,11 +30,24 @@ class Register extends React.Component {
   handleChange = (event) => {
     const { target } = event;
     const { name, value } = target;
-    this.setState({ [name]: value });
+
+    this.setState({ [name]: value }, () => {
+      const { email, password, username } = this.state;
+      const invalidFieldsMessage = validateFields(email, password, username);
+
+      if (invalidFieldsMessage !== true) {
+        return this.setState({
+          invalidUser: true, errorMsg: invalidFieldsMessage, loginBtnDisable: true });
+      }
+
+      this.setState({ invalidUser: false, loginBtnDisable: false });
+    });
   };
 
   render() {
-    const { username, email, password, invalidUser, errorMsg } = this.state;
+    const { username, email, password, invalidUser,
+      errorMsg, loginBtnDisable } = this.state;
+
     return (
       <div>
         <h1>Registro</h1>
@@ -46,7 +57,7 @@ class Register extends React.Component {
           value={ username }
           placeholder="nome"
           onChange={ this.handleChange }
-          data-testid="common_login__input-email"
+          data-testid="common_register__input-name"
         />
         <input
           type="email"
@@ -55,7 +66,7 @@ class Register extends React.Component {
           value={ email }
           placeholder="email"
           onChange={ this.handleChange }
-          data-testid="common_login__input-email"
+          data-testid="common_register__input-email"
         />
         <input
           type="password"
@@ -63,13 +74,14 @@ class Register extends React.Component {
           placeholder="senha"
           value={ password }
           onChange={ this.handleChange }
-          data-testid="common_login__input-password"
+          data-testid="common_register__input-password"
         />
         <button
-          type="submit"
+          type="button"
           value="Cadastrar"
+          disabled={ loginBtnDisable }
           onClick={ this.handleRegister }
-          data-testid="common_login__button-register"
+          data-testid="common_register__button-register"
         >
           Cadastrar
 
@@ -77,7 +89,7 @@ class Register extends React.Component {
         {
           invalidUser && (
             <span
-              data-testid="common_login__element-invalid-register"
+              data-testid="common_register__element-invalid-register"
             >
               {errorMsg}
             </span>
