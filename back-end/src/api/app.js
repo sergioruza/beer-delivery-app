@@ -6,7 +6,7 @@ const routes = require('./routes');
 
 const app = express();
 
-app.get('/coffee', (_req, res) => res.status(418).end());
+app.get('/coffee', (_req, res) => res.status(418).end('oi'));
 app.use('/login', routes.loginRoute);
 
 app.use(ErrorHandler.handle);

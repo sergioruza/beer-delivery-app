@@ -1,4 +1,4 @@
-const { LoginService } = require('../services/LoginController');
+const { LoginService } = require('../services/LoginService');
 
 class LoginController {
   constructor(req, res) {
@@ -8,8 +8,8 @@ class LoginController {
   }
 
   async findByEmail() {
-    const { email } = this.req.body;
-    const user = this.service.findByEmail(email);
+    const { email, password } = this.req.body;
+    const user = this.service.findByEmail(email, password);
     return this.res.status(200).json(user);
   }
 }
