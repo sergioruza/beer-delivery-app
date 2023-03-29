@@ -2,17 +2,15 @@ const md5 = require('md5');
 const { User } = require('../../database/models');
 const { default: GenericError } = require('../../errors/GenericError');
 const generateToken = require('../../token/generateToken');
-const { GenericMethods } = require('../utils/GenericMethods');
 
-class LoginService extends GenericMethods {
+class LoginService {
   constructor() {
-    super(User);
     this.model = User;
   }
 
   async findByEmail(email, password) {
     const passwordHash = md5(password);
-    const user = this.model.findOne({ where: { email } });
+    const user = await this.model.findOne({ where: { email } });
     
     if (!user || passwordHash !== user.password) throw new GenericError('User not found', 404);
     const payload = {
