@@ -3,7 +3,7 @@ const fs = require('fs/promises');
 
 const secretKey = async () => {
   const data = await fs.readFile(
-    'back-end/jwt.evaluation.key', 
+    './jwt.evaluation.key', 
     'utf-8',
   );
   return data;
