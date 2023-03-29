@@ -1,6 +1,6 @@
 const md5 = require('md5');
 const { User } = require('../../database/models');
-const { default: GenericError } = require('../../errors/GenericError');
+const GenericError = require('../../errors/GenericError');
 const generateToken = require('../../token/generateToken');
 
 class LoginService {
