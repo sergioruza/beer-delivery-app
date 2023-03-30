@@ -12,15 +12,19 @@ class Provider extends Component {
   state = {
     listProducts: [],
     orderDetails: [],
+    carValue: 0,
   };
 
   products = async () => {
     const { listProducts } = this.state;
-    console.log(listProducts);
     if (listProducts.length === 0) {
       const data = await getProducts();
       this.setData(data);
     }
+  };
+
+  setCarValue = (value) => {
+    this.setState(() => ({ carValue: value }));
   };
 
   setData = (listProducts) => {
@@ -34,11 +38,12 @@ class Provider extends Component {
   render() {
     this.products();
     const { children } = this.props;
-    const { listProducts, orderDetails } = this.state;
-    const { setData, setOrderDetails } = this;
+
+    const { listProducts, carValue } = this.state;
+    const { setData, setCarValue } = this;
 
     return (
-      <AppProvider value={ { listProducts, orderDetails, setData, setOrderDetails } }>
+      <AppProvider value={ { listProducts, setData, carValue, setCarValue } }>
         { children }
       </AppProvider>
     );

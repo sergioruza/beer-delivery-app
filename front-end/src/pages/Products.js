@@ -10,16 +10,28 @@ export default class Products extends Component {
     const { history } = this.props;
     const type = history.location.pathname.split('/')[1];
     const username = getLocalStorage('user', { name: 'Matheus' });
-    // console.log(type);
-
     return (
       <AppConsumer>
-        {({ listProducts }) => (
+        {({ listProducts, setCarValue, carValue }) => (
           <div>
             <Header userName={ username.name } type={ type } history={ history } />
+            <button
+              data-testid="customer_products__button-cart"
+              onClick={ () => history.push('/customer/checkout') }
+              disabled={ Number(carValue) === 0 }
+              type="button"
+            >
+              <div>
+                Ver Carrinho: R$
+                <span data-testid="customer_products__checkout-bottom-value">
+                  {Number(carValue).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </span>
+              </div>
+            </button>
             <section>
               {listProducts?.map(({ price, urlImage, name, id }) => (
                 <ProductCard
+                  setCarValue={ setCarValue }
                   key={ id }
                   price={ price }
                   img={ urlImage }
@@ -28,15 +40,6 @@ export default class Products extends Component {
                 />
               )) }
             </section>
-            <button
-              data-testid="customer_products__button-cart"
-              type="button"
-            >
-              <p data-testid="customer_products__checkout-bottom-value">
-                Ver Carrinho: R$ 28,46
-              </p>
-
-            </button>
           </div>
         )}
       </AppConsumer>
