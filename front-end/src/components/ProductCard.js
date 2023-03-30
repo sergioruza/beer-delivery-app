@@ -30,8 +30,13 @@ class ProductCard extends React.Component {
     const ROUTE = 'customer_products';
     return (
       <div>
-        <span data-testid={ `${ROUTE}__element-card-price-${id}` }>{price}</span>
+        <span
+          data-testid={ `${ROUTE}__element-card-price-${id}` }
+        >
+          {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+        </span>
         <img
+          width={ 200 }
           data-testid={ `${ROUTE}__img-card-bg-image-${id}` }
           src={ img }
           alt={ `${title}-img` }
@@ -49,7 +54,7 @@ class ProductCard extends React.Component {
           <input
             name="counter"
             onChange={ this.handleChange }
-            type="number"
+            type="text"
             data-testid={ `customer_products__input-card-quantity-${id}` }
             value={ counter }
           />

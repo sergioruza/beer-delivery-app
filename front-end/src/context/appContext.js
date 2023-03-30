@@ -15,6 +15,7 @@ class Provider extends Component {
 
   products = async () => {
     const { listProducts } = this.state;
+    console.log(listProducts);
     if (listProducts.length === 0) {
       const data = await getProducts();
       this.setData(data);
