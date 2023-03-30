@@ -1,10 +1,37 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import getLocalStorage from '../services/getLocalStorage';
+import setLocalStorage from '../services/setLocalStorage';
 
 class ProductCard extends React.Component {
   state = {
     counter: 0,
   };
+
+  componentDidUpdate() {
+    const { price, img, title, id } = this.props;
+    const { counter } = this.state;
+    const newProduct = { price, img, title, id, quantity: counter };
+
+    const carProducts = getLocalStorage('carProducts', []);
+    const index = carProducts.findIndex((p) => p.id === id);
+
+    if (counter === 0) { // se o quantity for 0 ele remove
+      const newProducts = carProducts.filter((p) => p.id !== id);
+      setLocalStorage('carProducts', newProducts);
+    }
+
+    const MENOS_UM = -1; // se nao existir retona -1
+    if (index === MENOS_UM) {
+      carProducts.push(newProduct);
+    } else { // se ja existir ele atualiza o quantity
+      carProducts[index] = newProduct;
+    }
+
+    if (counter > 0) {
+      setLocalStorage('carProducts', carProducts);
+    }
+  }
 
   increment = () => {
     const { counter } = this.state;
@@ -21,7 +48,7 @@ class ProductCard extends React.Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({ [name]: value });
+    return this.setState({ [name]: Number(value) });
   };
 
   render() {
@@ -54,7 +81,8 @@ class ProductCard extends React.Component {
           <input
             name="counter"
             onChange={ this.handleChange }
-            type="text"
+            min="0"
+            type="number"
             data-testid={ `customer_products__input-card-quantity-${id}` }
             value={ counter }
           />
