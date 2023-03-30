@@ -3,7 +3,6 @@ const { Product } = require('../../database/models');
 class ProductsService {
   constructor() {
     this.model = Product;
-    this.sla = 'sla';
   }
 
   async findAllProducts() {

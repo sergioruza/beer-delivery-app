@@ -28,6 +28,15 @@ export default class Products extends Component {
                 />
               )) }
             </section>
+            <button
+              data-testid="customer_products__button-cart"
+              type="button"
+            >
+              <p data-testid="customer_products__checkout-bottom-value">
+                Ver Carrinho: R$ 28,46
+              </p>
+
+            </button>
           </div>
         )}
       </AppConsumer>
