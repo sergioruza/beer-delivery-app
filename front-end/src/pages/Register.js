@@ -19,7 +19,10 @@ class Register extends React.Component {
 
     const { history } = this.props;
 
-    const { error, token } = await loginAPI('/register', { username, email, password });
+    const { error, token } = await loginAPI(
+      '/register',
+      { name: username, email, password },
+    );
     if (error) {
       return this.setState({ invalidUser: true, errorMsg: error });
     }
@@ -77,7 +80,7 @@ class Register extends React.Component {
           data-testid="common_register__input-password"
         />
         <button
-          type="button"
+          type="submit"
           value="Cadastrar"
           disabled={ loginBtnDisable }
           onClick={ this.handleRegister }
