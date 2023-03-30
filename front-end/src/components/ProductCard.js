@@ -8,17 +8,21 @@ class ProductCard extends React.Component {
     counter: 0,
   };
 
+  componentDidMount() {
+    this.sumProducts();
+  }
+
   componentDidUpdate() {
     const { price, img, title, id } = this.props;
     const { counter } = this.state;
     const newProduct = { price, img, title, id, quantity: counter };
 
-    const carProducts = getLocalStorage('carProducts', []);
+    const carProducts = getLocalStorage('carrinho', []);
     const index = carProducts.findIndex((p) => p.id === id);
 
     if (counter === 0) { // se o quantity for 0 ele remove
       const newProducts = carProducts.filter((p) => p.id !== id);
-      setLocalStorage('carProducts', newProducts);
+      setLocalStorage('carrinho', newProducts);
     }
 
     const MENOS_UM = -1; // se nao existir retona -1
@@ -29,9 +33,17 @@ class ProductCard extends React.Component {
     }
 
     if (counter > 0) {
-      setLocalStorage('carProducts', carProducts);
+      setLocalStorage('carrinho', carProducts);
     }
   }
+
+  // sumProducts = () => {
+  //   const { setCarValue } = this.props;
+  //   const products = getLocalStorage('carrinho', []);
+  //   const valuesSum = products.map((e) => e.price * e.quantity);
+  //   const total = valuesSum.reduce((cur, acc) => acc + cur, 0);
+  //   setCarValue(total);
+  // };
 
   increment = () => {
     const { counter } = this.state;
@@ -105,6 +117,7 @@ ProductCard.propTypes = {
   price: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  // setCarValue: PropTypes.func.isRequired,
 };
 
 export default ProductCard;
