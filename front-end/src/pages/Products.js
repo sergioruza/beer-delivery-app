@@ -7,12 +7,12 @@ export default class Products extends Component {
   render() {
     const { history } = this.props;
     const type = history.location.pathname.split('/')[1];
-    const username = getLocalStorage('name', 'Matheus');
+    const username = getLocalStorage('user', { name: 'Matheus' });
     // console.log(type);
 
     return (
       <div>
-        <Header userName={ username } type={ type } history={ history } />
+        <Header userName={ username.name } type={ type } history={ history } />
       </div>
 
     );
