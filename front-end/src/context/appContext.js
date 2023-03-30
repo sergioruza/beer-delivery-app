@@ -11,7 +11,6 @@ export const AppConsumer = AppContext.Consumer;
 class Provider extends Component {
   state = {
     listProducts: [],
-    orderDetails: [],
     carValue: 0,
   };
 
@@ -29,10 +28,6 @@ class Provider extends Component {
 
   setData = (listProducts) => {
     this.setState(() => ({ listProducts }));
-  };
-
-  setOrderDetails = (orderDetails) => {
-    this.setState(() => ({ orderDetails }));
   };
 
   render() {
