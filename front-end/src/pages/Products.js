@@ -18,16 +18,25 @@ export default class Products extends Component {
           <div>
             <Header userName={ username.name } type={ type } history={ history } />
             <section>
-              {listProducts?.map(({ price, img, name, id }) => (
+              {listProducts?.map(({ price, urlImage, name, id }) => (
                 <ProductCard
                   key={ id }
                   price={ price }
-                  img={ img }
+                  img={ urlImage }
                   title={ name }
                   id={ id }
                 />
               )) }
             </section>
+            <button
+              data-testid="customer_products__button-cart"
+              type="button"
+            >
+              <p data-testid="customer_products__checkout-bottom-value">
+                Ver Carrinho: R$ 28,46
+              </p>
+
+            </button>
           </div>
         )}
       </AppConsumer>

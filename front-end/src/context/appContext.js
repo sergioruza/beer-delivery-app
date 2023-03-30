@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import produtos from './mockProducts';
+// import produtos from './mockProducts';
+import { getProducts } from '../services/requests';
 
 const AppContext = React.createContext();
 
@@ -9,7 +10,16 @@ export const AppConsumer = AppContext.Consumer;
 
 class Provider extends Component {
   state = {
-    listProducts: produtos,
+    listProducts: [],
+  };
+
+  products = async () => {
+    const { listProducts } = this.state;
+    console.log(listProducts);
+    if (listProducts.length === 0) {
+      const data = await getProducts();
+      this.setData(data);
+    }
   };
 
   setData = (listProducts) => {
@@ -17,6 +27,7 @@ class Provider extends Component {
   };
 
   render() {
+    this.products();
     const { children } = this.props;
     const { listProducts } = this.state;
     const { setData } = this;

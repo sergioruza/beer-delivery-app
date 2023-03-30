@@ -5,7 +5,12 @@ const api = axios.create({
 });
 export const loginAPI = async (endpoint, body) => {
   const { data } = await api.post(endpoint, body).catch((e) => e.response);
-  console.log(data);
+
+  return data;
+};
+
+export const getProducts = async () => {
+  const { data } = await api.get('/products').catch((e) => e.response);
   return data;
 };
 
