@@ -65,10 +65,10 @@ class ProductCard extends React.Component {
 
     // soma todos os precos dos produtos do carrinho
     const products = getLocalStorage('carrinho', []);
-    const valuesSum = products.map((e) => e.price * e.quantity);
-    const total = valuesSum.reduce((cur, acc) => acc + cur, 0);
+    const valuesSum = products.map((e) => e.price * e.quantity)
+      .reduce((cur, acc) => acc + cur, 0);
 
-    setCarValue(total.toFixed(2));
+    setCarValue(valuesSum.toFixed(2));
   };
 
   render() {

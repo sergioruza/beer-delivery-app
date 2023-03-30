@@ -33,6 +33,7 @@ class Provider extends Component {
   render() {
     this.products();
     const { children } = this.props;
+
     const { listProducts, carValue } = this.state;
     const { setData, setCarValue } = this;
 
