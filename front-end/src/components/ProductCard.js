@@ -6,13 +6,10 @@ import setLocalStorage from '../services/setLocalStorage';
 class ProductCard extends React.Component {
   state = {
     counter: 0,
+    carValue: 0,
   };
 
-  componentDidMount() {
-    this.sumProducts();
-  }
-
-  componentDidUpdate() {
+  updateCar = () => {
     const { price, img, title, id } = this.props;
     const { counter } = this.state;
     const newProduct = { price, img, title, id, quantity: counter };
@@ -35,36 +32,41 @@ class ProductCard extends React.Component {
     if (counter > 0) {
       setLocalStorage('carrinho', carProducts);
     }
-  }
 
-  // sumProducts = () => {
-  //   const { setCarValue } = this.props;
-  //   const products = getLocalStorage('carrinho', []);
-  //   const valuesSum = products.map((e) => e.price * e.quantity);
-  //   const total = valuesSum.reduce((cur, acc) => acc + cur, 0);
-  //   setCarValue(total);
-  // };
+    this.sumProducts();
+  };
 
   increment = () => {
     const { counter } = this.state;
-    this.setState({ counter: counter + 1 });
+    this.setState({ counter: counter + 1 }, () => this.updateCar());
   };
 
   decrement = () => {
     const { counter } = this.state;
     if (counter <= 0) {
-      return this.setState({ counter: 0 });
+      return this.setState({ counter: 0 }, () => this.updateCar());
     }
-    this.setState({ counter: counter - 1 });
+    this.setState({ counter: counter - 1 }, () => this.updateCar());
   };
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    return this.setState({ [name]: Number(value) });
+    this.sumProducts();
+    return this.setState({ [name]: Number(value) }, () => this.updateCar());
+  };
+
+  sumProducts = () => {
+    const { setCarValue } = this.props;
+    console.log(setCarValue);
+    const products = getLocalStorage('carrinho', []);
+    const valuesSum = products.map((e) => e.price * e.quantity);
+    const total = valuesSum.reduce((cur, acc) => acc + cur, 0);
+    setCarValue(total.toFixed(2));
   };
 
   render() {
-    const { counter } = this.state;
+    const { counter, carValue } = this.state;
+    console.log(carValue);
     const { price, img, title, id } = this.props;
     const ROUTE = 'customer_products';
     return (
@@ -117,7 +119,7 @@ ProductCard.propTypes = {
   price: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  // setCarValue: PropTypes.func.isRequired,
+  setCarValue: PropTypes.func.isRequired,
 };
 
 export default ProductCard;
