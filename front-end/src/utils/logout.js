@@ -1,8 +1,5 @@
 const logout = (history) => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('role');
-  localStorage.removeItem('name');
-  localStorage.removeItem('email');
+  localStorage.removeItem('user');
   history.push('/login');
 };
 

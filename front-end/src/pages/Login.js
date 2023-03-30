@@ -24,12 +24,8 @@ class Login extends React.Component {
     if (error) {
       return this.setState({ invalidUser: true, errorMsg: error });
     }
-    // setToken(token);
-    localStorage.setItem('token', token);
-    localStorage.setItem('role', JSON.stringify(role));
-    localStorage.setItem('name', JSON.stringify(name));
-    localStorage.setItem('email', JSON.stringify(email));
-
+    const storageObj = { token, role, name, email };
+    localStorage.setItem('user', JSON.stringify(storageObj));
     history.push(`/${role}/products`);
   };
 
