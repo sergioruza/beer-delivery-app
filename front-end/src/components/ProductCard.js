@@ -8,17 +8,24 @@ class ProductCard extends React.Component {
     counter: 0,
   };
 
-  componentDidUpdate() {
+  componentDidMount() {
+    const { id } = this.props;
+    const carProducts = getLocalStorage('carrinho', []);
+    const actualCar = carProducts.find((p) => p.id === id);
+    if (actualCar) this.setState({ counter: actualCar.quantity }, () => this.updateCar());
+  }
+
+  updateCar = () => {
     const { price, img, title, id } = this.props;
     const { counter } = this.state;
     const newProduct = { price, img, title, id, quantity: counter };
 
-    const carProducts = getLocalStorage('carProducts', []);
+    const carProducts = getLocalStorage('carrinho', []);
     const index = carProducts.findIndex((p) => p.id === id);
 
     if (counter === 0) { // se o quantity for 0 ele remove
       const newProducts = carProducts.filter((p) => p.id !== id);
-      setLocalStorage('carProducts', newProducts);
+      setLocalStorage('carrinho', newProducts);
     }
 
     const MENOS_UM = -1; // se nao existir retona -1
@@ -29,26 +36,39 @@ class ProductCard extends React.Component {
     }
 
     if (counter > 0) {
-      setLocalStorage('carProducts', carProducts);
+      setLocalStorage('carrinho', carProducts);
     }
-  }
+
+    this.sumProducts();
+  };
 
   increment = () => {
     const { counter } = this.state;
-    this.setState({ counter: counter + 1 });
+    this.setState({ counter: counter + 1 }, () => this.updateCar());
   };
 
   decrement = () => {
     const { counter } = this.state;
     if (counter <= 0) {
-      return this.setState({ counter: 0 });
+      return this.setState({ counter: 0 }, () => this.updateCar());
     }
-    this.setState({ counter: counter - 1 });
+    this.setState({ counter: counter - 1 }, () => this.updateCar());
   };
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    return this.setState({ [name]: Number(value) });
+    this.setState({ [name]: Number(value) }, () => this.updateCar());
+  };
+
+  sumProducts = () => {
+    const { setCarValue } = this.props;
+
+    // soma todos os precos dos produtos do carrinho
+    const products = getLocalStorage('carrinho', []);
+    const valuesSum = products.map((e) => e.price * e.quantity);
+    const total = valuesSum.reduce((cur, acc) => acc + cur, 0);
+
+    setCarValue(total.toFixed(2));
   };
 
   render() {
@@ -105,6 +125,7 @@ ProductCard.propTypes = {
   price: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  setCarValue: PropTypes.func.isRequired,
 };
 
 export default ProductCard;

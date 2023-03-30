@@ -11,15 +11,19 @@ export const AppConsumer = AppContext.Consumer;
 class Provider extends Component {
   state = {
     listProducts: [],
+    carValue: 0,
   };
 
   products = async () => {
     const { listProducts } = this.state;
-    console.log(listProducts);
     if (listProducts.length === 0) {
       const data = await getProducts();
       this.setData(data);
     }
+  };
+
+  setCarValue = (value) => {
+    this.setState(() => ({ carValue: value }));
   };
 
   setData = (listProducts) => {
@@ -29,11 +33,11 @@ class Provider extends Component {
   render() {
     this.products();
     const { children } = this.props;
-    const { listProducts } = this.state;
-    const { setData } = this;
+    const { listProducts, carValue } = this.state;
+    const { setData, setCarValue } = this;
 
     return (
-      <AppProvider value={ { listProducts, setData } }>
+      <AppProvider value={ { listProducts, setData, carValue, setCarValue } }>
         { children }
       </AppProvider>
     );
