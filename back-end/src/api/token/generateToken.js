@@ -15,4 +15,4 @@ const generateToken = async (payload) => {
   return token;
 };
 
-module.exports = generateToken;
+module.exports = { generateToken, secretKey };

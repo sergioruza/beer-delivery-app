@@ -1,7 +1,7 @@
 const md5 = require('md5');
 const { User } = require('../../database/models');
 // const GenericError = require('../../errors/GenericError');
-const generateToken = require('../token/generateToken');
+const { generateToken } = require('../token/generateToken');
 
 class LoginService {
   constructor() {

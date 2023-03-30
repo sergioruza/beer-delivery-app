@@ -15,6 +15,4 @@ class LoginController {
   }
 }
 
-module.exports = {
-  LoginController,
-};
+module.exports = LoginController;
