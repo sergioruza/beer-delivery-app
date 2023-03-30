@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Header } from '../components/Header';
+import { Header } from '../components';
 import getLocalStorage from '../services/getLocalStorage';
 
 export default class Products extends Component {
