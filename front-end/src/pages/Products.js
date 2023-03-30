@@ -15,6 +15,19 @@ export default class Products extends Component {
         {({ listProducts, setCarValue, carValue }) => (
           <div>
             <Header userName={ username.name } type={ type } history={ history } />
+            <button
+              data-testid="customer_products__button-cart"
+              onClick={ () => history.push('/customer/checkout') }
+              disabled={ Number(carValue) === 0 }
+              type="button"
+            >
+              <div>
+                Ver Carrinho: R$
+                <span data-testid="customer_products__checkout-bottom-value">
+                  {Number(carValue).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </span>
+              </div>
+            </button>
             <section>
               {listProducts?.map(({ price, urlImage, name, id }) => (
                 <ProductCard
@@ -27,18 +40,6 @@ export default class Products extends Component {
                 />
               )) }
             </section>
-            <button
-              data-testid="customer_products__button-cart"
-              type="button"
-            >
-              <div>
-                Ver Carrinho: R$
-                <span data-testid="customer_products__checkout-bottom-value">
-                  {Number(carValue).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-              </div>
-
-            </button>
           </div>
         )}
       </AppConsumer>

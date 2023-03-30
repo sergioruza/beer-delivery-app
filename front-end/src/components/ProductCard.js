@@ -6,8 +6,14 @@ import setLocalStorage from '../services/setLocalStorage';
 class ProductCard extends React.Component {
   state = {
     counter: 0,
-    carValue: 0,
   };
+
+  componentDidMount() {
+    const { id } = this.props;
+    const carProducts = getLocalStorage('carrinho', []);
+    const actualCar = carProducts.find((p) => p.id === id);
+    if (actualCar) this.setState({ counter: actualCar.quantity }, () => this.updateCar());
+  }
 
   updateCar = () => {
     const { price, img, title, id } = this.props;
@@ -51,22 +57,22 @@ class ProductCard extends React.Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    this.sumProducts();
-    return this.setState({ [name]: Number(value) }, () => this.updateCar());
+    this.setState({ [name]: Number(value) }, () => this.updateCar());
   };
 
   sumProducts = () => {
     const { setCarValue } = this.props;
-    console.log(setCarValue);
+
+    // soma todos os precos dos produtos do carrinho
     const products = getLocalStorage('carrinho', []);
     const valuesSum = products.map((e) => e.price * e.quantity);
     const total = valuesSum.reduce((cur, acc) => acc + cur, 0);
+
     setCarValue(total.toFixed(2));
   };
 
   render() {
-    const { counter, carValue } = this.state;
-    console.log(carValue);
+    const { counter } = this.state;
     const { price, img, title, id } = this.props;
     const ROUTE = 'customer_products';
     return (
