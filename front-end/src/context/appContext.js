@@ -11,6 +11,7 @@ export const AppConsumer = AppContext.Consumer;
 class Provider extends Component {
   state = {
     listProducts: [],
+    orderDetails: [],
   };
 
   products = async () => {
@@ -26,14 +27,18 @@ class Provider extends Component {
     this.setState(() => ({ listProducts }));
   };
 
+  setOrderDetails = (orderDetails) => {
+    this.setState(() => ({ orderDetails }));
+  };
+
   render() {
     this.products();
     const { children } = this.props;
-    const { listProducts } = this.state;
-    const { setData } = this;
+    const { listProducts, orderDetails } = this.state;
+    const { setData, setOrderDetails } = this;
 
     return (
-      <AppProvider value={ { listProducts, setData } }>
+      <AppProvider value={ { listProducts, orderDetails, setData, setOrderDetails } }>
         { children }
       </AppProvider>
     );
