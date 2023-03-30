@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import getOrderType from '../utils/getOrderType';
 import logout from '../utils/logout';
 
-export class Header extends Component {
+class Header extends Component {
   render() {
     const { userName, type, history } = this.props;
     const ROUTE = 'customer_products';
