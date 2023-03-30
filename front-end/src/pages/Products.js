@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Header } from '../components';
 import getLocalStorage from '../services/getLocalStorage';
+import ProductCard from '../components/ProductCard';
+import { AppConsumer } from '../context/appContext';
 
 export default class Products extends Component {
   render() {
@@ -11,9 +13,24 @@ export default class Products extends Component {
     // console.log(type);
 
     return (
-      <div>
-        <Header userName={ username.name } type={ type } history={ history } />
-      </div>
+      <AppConsumer>
+        {({ listProducts }) => (
+          <div>
+            <Header userName={ username.name } type={ type } history={ history } />
+            <section>
+              {listProducts?.map(({ price, img, name, id }) => (
+                <ProductCard
+                  key={ id }
+                  price={ price }
+                  img={ img }
+                  title={ name }
+                  id={ id }
+                />
+              )) }
+            </section>
+          </div>
+        )}
+      </AppConsumer>
 
     );
   }

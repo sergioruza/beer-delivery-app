@@ -9,20 +9,20 @@ export const AppConsumer = AppContext.Consumer;
 
 class Provider extends Component {
   state = {
-    data: produtos,
+    listProducts: produtos,
   };
 
-  setData = (data) => {
-    this.setState(() => ({ data }));
+  setData = (listProducts) => {
+    this.setState(() => ({ listProducts }));
   };
 
   render() {
     const { children } = this.props;
-    const { data } = this.state;
+    const { listProducts } = this.state;
     const { setData } = this;
 
     return (
-      <AppProvider value={ { data, setData } }>
+      <AppProvider value={ { listProducts, setData } }>
         { children }
       </AppProvider>
     );

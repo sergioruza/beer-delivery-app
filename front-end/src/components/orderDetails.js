@@ -3,10 +3,11 @@ import { AppConsumer } from '../context/appContext';
 
 export default class OrderDetails extends Component {
   render() {
+    const COSTUMER = 'customer_checkout__';
+    const ELEMENTORDER = 'element-order';
     return (
       <AppConsumer>
-        {(props) => (
-
+        {({ listProducts }) => (
           <div>
             <table>
               <tr>
@@ -17,12 +18,50 @@ export default class OrderDetails extends Component {
                 <th>Sub-total</th>
                 <th>Remover Item</th>
               </tr>
-              {props?.data.map((product, index) => (
+              {listProducts?.map((product, index) => (
                 <tr key={ index }>
-                  <td>{index + 1}</td>
-                  <td>{product.name}</td>
-                  <td>0</td>
-                  <td>{product.price}</td>
+                  <td
+                    data-test-id={
+                      `${COSTUMER}${ELEMENTORDER}-table-item-number-${index + 1}`
+                    }
+                  >
+                    {index + 1}
+                  </td>
+                  <td
+                    data-test-id={
+                      `${COSTUMER}${ELEMENTORDER}-table-name-${index + 1}`
+                    }
+                  >
+                    {product.name}
+                  </td>
+                  <td
+                    data-test-id={
+                      `${COSTUMER}${ELEMENTORDER}-table-item-quantity-${index + 1}`
+                    }
+                  >
+                    0
+                  </td>
+                  <td
+                    data-test-id={
+                      `${COSTUMER}${ELEMENTORDER}-table-unit-price-${index + 1}`
+                    }
+                  >
+                    {product.price}
+                  </td>
+                  <td
+                    data-test-id={
+                      `${COSTUMER}${ELEMENTORDER}-table-sub-total-${index + 1}`
+                    }
+                  >
+                    sub total aqui
+                  </td>
+                  <td
+                    data-test-id={
+                      `${COSTUMER}${ELEMENTORDER}-table-remove-${index + 1}`
+                    }
+                  >
+                    <button type="button">Remover</button>
+                  </td>
                 </tr>
               ))}
             </table>
