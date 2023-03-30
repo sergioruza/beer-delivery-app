@@ -9,14 +9,14 @@ export default class OrderDetails extends Component {
   };
 
   componentDidMount() {
-    const getstorage = getLocalStorage('carProducts', []);
+    const getstorage = getLocalStorage('carrinho', []);
     this.setState({ carProducts: getstorage });
   }
 
   removeItem(id) { // se o quantity for 0 ele remove
-    const carProducts = getLocalStorage('carProducts', []);
+    const carProducts = getLocalStorage('carrinho', []);
     const newProducts = carProducts.filter((p) => p.id !== id);
-    setLocalStorage('carProducts', newProducts);
+    setLocalStorage('carrinho', newProducts);
     this.setState({ carProducts: newProducts });
   }
 
@@ -44,43 +44,45 @@ export default class OrderDetails extends Component {
           {carProducts?.map((product, index) => (
             <tr key={ index }>
               <td
-                data-test-id={
-                  `${COSTUMER}${ELEMENTORDER}-table-item-number-${index + 1}`
+                data-testid={
+                  `${COSTUMER}${ELEMENTORDER}-table-item-number-${index}`
                 }
               >
                 {index + 1}
               </td>
               <td
-                data-test-id={
-                  `${COSTUMER}${ELEMENTORDER}-table-name-${index + 1}`
+                data-testid={
+                  `${COSTUMER}${ELEMENTORDER}-table-name-${index}`
                 }
               >
                 {product.title}
               </td>
               <td
-                data-test-id={
-                  `${COSTUMER}${ELEMENTORDER}-table-item-quantity-${index + 1}`
+                data-testid={
+                  `${COSTUMER}${ELEMENTORDER}-table-quantity-${index}`
                 }
               >
                 {product.quantity}
               </td>
               <td
-                data-test-id={
-                  `${COSTUMER}${ELEMENTORDER}-table-unit-price-${index + 1}`
+                data-testid={
+                  `${COSTUMER}${ELEMENTORDER}-table-unit-price-${index}`
                 }
               >
-                {product.price}
+                {Number(product.price)
+                  .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </td>
               <td
-                data-test-id={
-                  `${COSTUMER}${ELEMENTORDER}-table-sub-total-${index + 1}`
+                data-testid={
+                  `${COSTUMER}${ELEMENTORDER}-table-sub-total-${index}`
                 }
               >
-                {(product.price * product.quantity).toFixed(2)}
+                {Number(product.price * product.quantity)
+                  .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </td>
               <td
-                data-test-id={
-                  `${COSTUMER}${ELEMENTORDER}-table-remove-${index + 1}`
+                data-testid={
+                  `${COSTUMER}${ELEMENTORDER}-table-remove-${index}`
                 }
               >
                 <button
@@ -93,10 +95,13 @@ export default class OrderDetails extends Component {
             </tr>
           ))}
         </table>
-        <p>
+        <div>
           Total: R$
-          {total.toFixed(2)}
-        </p>
+          <span data-testid={ `${COSTUMER}${ELEMENTORDER}-total-price` }>
+            {Number(total).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </span>
+        </div>
+
       </div>
     );
   }
