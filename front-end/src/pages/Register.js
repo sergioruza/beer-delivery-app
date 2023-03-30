@@ -27,6 +27,9 @@ class Register extends React.Component {
       return this.setState({ invalidUser: true, errorMsg: error });
     }
     localStorage.setItem('token', token);
+    localStorage.setItem('role', JSON.stringify('customer'));
+    localStorage.setItem('name', JSON.stringify(username));
+    localStorage.setItem('email', JSON.stringify(email));
     history.push('/customer/products');
   };
 

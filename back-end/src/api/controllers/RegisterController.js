@@ -9,7 +9,8 @@ class RegisterController {
 
 async createUser() {
     const token = await this.service.createUser(this.req.body);
-    return this.res.status(201).json({ token });
+    const status = token.status ? token.status : 201;
+    return this.res.status(status).json(token);
 }
 }
 

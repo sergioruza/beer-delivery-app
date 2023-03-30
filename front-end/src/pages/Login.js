@@ -18,7 +18,7 @@ class Login extends React.Component {
 
     const { history } = this.props;
     const result = await loginAPI('/login', { email, password });
-    const { error, role, token, username } = result;
+    const { error, role, token, name } = result;
     console.log(result);
 
     if (error) {
@@ -26,8 +26,9 @@ class Login extends React.Component {
     }
     // setToken(token);
     localStorage.setItem('token', token);
-    localStorage.setItem('role', role);
-    localStorage.setItem('username', JSON.stringify(username));
+    localStorage.setItem('role', JSON.stringify(role));
+    localStorage.setItem('name', JSON.stringify(name));
+    localStorage.setItem('email', JSON.stringify(email));
 
     history.push(`/${role}/products`);
   };
@@ -85,7 +86,7 @@ class Login extends React.Component {
         {
           invalidUser && (
             <span
-              data-testid="common_login__element-invalid-register"
+              data-testid="common_login__element-invalid-email"
             >
               {errorMsg}
             </span>

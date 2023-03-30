@@ -7,7 +7,7 @@ export default class Products extends Component {
   render() {
     const { history } = this.props;
     const type = history.location.pathname.split('/')[1];
-    const username = getLocalStorage('username', 'Matheus');
+    const username = getLocalStorage('name', 'Matheus');
     // console.log(type);
 
     return (
