@@ -10,7 +10,8 @@ class LoginController {
   async findByEmail() {
     const { email, password } = this.req.body;
     const user = await this.service.findByEmail(email, password);
-    return this.res.status(200).json(user);
+    const status = user.status ? user.status : 200;
+    return this.res.status(status).json(user);
   }
 }
 

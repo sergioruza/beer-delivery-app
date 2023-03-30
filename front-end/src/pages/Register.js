@@ -19,12 +19,18 @@ class Register extends React.Component {
 
     const { history } = this.props;
 
-    const { error } = await loginAPI('/register', { username, email, password });
+    const { error, token } = await loginAPI(
+      '/register',
+      { name: username, email, password },
+    );
     if (error) {
       return this.setState({ invalidUser: true, errorMsg: error });
     }
-
-    history.push('/login');
+    localStorage.setItem('token', token);
+    localStorage.setItem('role', JSON.stringify('customer'));
+    localStorage.setItem('name', JSON.stringify(username));
+    localStorage.setItem('email', JSON.stringify(email));
+    history.push('/customer/products');
   };
 
   handleChange = (event) => {
@@ -77,7 +83,7 @@ class Register extends React.Component {
           data-testid="common_register__input-password"
         />
         <button
-          type="button"
+          type="submit"
           value="Cadastrar"
           disabled={ loginBtnDisable }
           onClick={ this.handleRegister }
@@ -89,7 +95,7 @@ class Register extends React.Component {
         {
           invalidUser && (
             <span
-              data-testid="common_register__element-invalid-register"
+              data-testid="common_register__element-invalid_register"
             >
               {errorMsg}
             </span>
@@ -101,7 +107,9 @@ class Register extends React.Component {
 }
 
 Register.propTypes = {
-  history: PropTypes.shape.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default Register;

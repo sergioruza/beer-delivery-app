@@ -10,8 +10,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/coffee', (_req, res) => res.status(418).json('sou lindo'));
+app.get('/coffee', (_req, res) => res.status(418).json('teste'));
 app.use('/login', routes.loginRoute);
+app.use('/register', routes.registerRoute);
 
 // app.use(ErrorHandler.handle);
 
