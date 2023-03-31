@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const SalesProduct = sequelize.define('SalesProduct', {
+  const SalesProduct = sequelize.define('Sales_Product', {
     saleId: { type: DataTypes.INTEGER, allowNull: false, foreignKey: true, primaryKey: true },
     productId: { type: DataTypes.INTEGER, allowNull: false, foreignKey: true, primaryKey: true },
     quantity: { type: DataTypes.INTEGER, allowNull: false },

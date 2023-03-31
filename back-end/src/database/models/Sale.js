@@ -18,12 +18,17 @@ module.exports = (sequelize, DataTypes) => {
   const Sale = sequelize.define(
     'Sale',
     sale(DataTypes),
-    { underscored: true, timestamps: false, tableName: 'sales', dialectOptions: { decimalNumbers: true } },
+    {
+       underscored: true,
+       timestamps: false,
+       tableName: 'sales',
+       dialectOptions: { decimalNumbers: true },
+      },
   );
-  Sale.associate = ({ User, SalesProduct }) => {
+  Sale.associate = ({ User, Sales_Product }) => {
     Sale.belongsTo(User, { foreignKey: 'userId', as: 'user', through: Sale });
     Sale.belongsTo(User, { foreignKey: 'sellerId', as: 'seller', through: Sale });
-    Sale.hasMany(SalesProduct, { foreignKey: 'saleId', as: 'sale' });
+    Sale.hasMany(Sales_Product, { foreignKey: 'saleId', as: 'sale' });
   };
   return Sale;
 };
