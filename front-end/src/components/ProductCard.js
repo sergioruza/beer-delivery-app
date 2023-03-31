@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
+import getTotalPrice from '../utils/getTotalPrice';
 
 class ProductCard extends React.Component {
   state = {
@@ -11,8 +12,8 @@ class ProductCard extends React.Component {
   componentDidMount() {
     const { id } = this.props;
     const carProducts = getLocalStorage('carrinho', []);
-    const actualCar = carProducts.find((p) => p.id === id);
-    if (actualCar) this.setState({ counter: actualCar.quantity }, () => this.updateCar());
+    const product = carProducts.find((p) => p.id === id);
+    if (product) this.setState({ counter: product.quantity }, () => this.updateCar());
   }
 
   updateCar = () => {
@@ -62,13 +63,7 @@ class ProductCard extends React.Component {
 
   sumProducts = () => {
     const { setCarValue } = this.props;
-
-    // soma todos os precos dos produtos do carrinho
-    const products = getLocalStorage('carrinho', []);
-    const valuesSum = products.map((e) => e.price * e.quantity)
-      .reduce((cur, acc) => acc + cur, 0);
-
-    setCarValue(valuesSum.toFixed(2));
+    setCarValue(getTotalPrice().toFixed(2));
   };
 
   render() {

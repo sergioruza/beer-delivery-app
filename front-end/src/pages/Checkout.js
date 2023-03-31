@@ -14,8 +14,7 @@ export default class Checkout extends Component {
   };
 
   componentDidMount() {
-    const carProducts = getLocalStorage('carrinho', []);
-    this.setState({ totalPrice: getTotalPrice(carProducts) });
+    this.setState({ totalPrice: getTotalPrice() });
   }
 
   createNewSale = async () => {
