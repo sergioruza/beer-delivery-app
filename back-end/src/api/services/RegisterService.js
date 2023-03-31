@@ -1,6 +1,6 @@
 const md5 = require('md5');
 // const LoginService = require('./LoginService');
-const generateToken = require('../token/generateToken');
+const { generateToken } = require('../token/generateToken');
 // const GenericError = require('../../errors/GenericError');
 const { User } = require('../../database/models');
 const validateRegister = require('./validations/validateRegister');
@@ -29,3 +29,11 @@ class RegisterService {
 }
 
 module.exports = RegisterService;
+
+/* 
+{
+  "totalPrice": 999,
+  "deliveryAddress": "Black123@hotmail.com",
+  "deliveryNumber": "1520304567969",
+  "sellerName": "Fulana Pereira"
+} */
