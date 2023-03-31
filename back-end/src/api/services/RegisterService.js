@@ -6,25 +6,26 @@ const { User } = require('../../database/models');
 const validateRegister = require('./validations/validateRegister');
 
 class RegisterService {
-    constructor() {
-        this.model = User;
-    }
+  constructor() {
+    this.model = User;
+  }
 
-   async createUser({ name, email, password }) {
+  async createUser({ name, email, password }) {
     validateRegister({ name, email, password });
-       const users = await this.model.findAll();
-       const repetedUsers = users.filter((e) => e.email === email || e.name === name);
+
+    const users = await this.model.findAll();
+    const repetedUsers = users.filter((e) => e.email === email || e.name === name);
     
-       if (repetedUsers.length > 0) return { error: 'name or email already exists', status: 409 };
-       const newUser = await this.model.create(
+    if (repetedUsers.length > 0) return { error: 'name or email already exists', status: 409 };
+    const newUser = await this.model.create(
         { name, email, password: md5(password), role: 'customer' },
-        );
+    );
+     
+    const token = await generateToken(
+        { name: newUser.name, email: newUser.email, role: newUser.role },
+    );
 
-        const token = await generateToken(
-            { name: newUser.name, email: newUser.email, role: newUser.role, id: newUser.id },
-            );
-
-        return { token }; 
+    return { token, id: newUser.id }; 
    }
 }
 

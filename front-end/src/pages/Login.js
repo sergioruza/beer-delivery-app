@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { loginAPI } from '../services/requests';
 import validateFields from '../utils/validateFields';
 import setLocalStorage from '../services/setLocalStorage';
+import logout from '../utils/logout';
 
 class Login extends React.Component {
   state = {
@@ -12,6 +13,11 @@ class Login extends React.Component {
     errorMsg: '',
     loginBtnDisable: true,
   };
+
+  componentDidMount() {
+    const { history } = this.props;
+    logout(history, 'login');
+  }
 
   handleLogin = async (event) => {
     event.preventDefault();

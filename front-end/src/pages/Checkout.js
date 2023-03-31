@@ -26,7 +26,7 @@ export default class Checkout extends Component {
       user,
     };
     const sale = await createSale(saleDetails);
-    console.log(sale);
+
     history.push(`/customer/orders/${sale.id}`);
   };
 
@@ -52,10 +52,10 @@ export default class Checkout extends Component {
             <select
               name="sellerName"
               value={ sellerName }
-              onChange={ this.handleChange }
+              onClick={ this.handleChange }
               data-testid="customer_checkout__select-seller"
             >
-              <option>Fulana Pereira</option>
+              <option value="Fulana Pereira">Fulana Pereira</option>
               {/* falta fazer require de sellers */}
             </select>
             <div>

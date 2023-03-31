@@ -1,4 +1,4 @@
-const { LoginService } = require('../services/LoginService');
+const LoginService = require('../services/LoginService');
 
 class LoginController {
   constructor(req, res) {
@@ -15,6 +15,4 @@ class LoginController {
   }
 }
 
-module.exports = {
-  LoginController, 
-};
+module.exports = LoginController;

@@ -8,7 +8,7 @@ class OrderController {
     }
 
     async createSale() {
-        const newUser = await this.service.createSale(this.req.body, this.req.user);
+        const newUser = await this.service.createSale(this.req.body);
         return this.res.status(201).json(newUser);
     }
 }

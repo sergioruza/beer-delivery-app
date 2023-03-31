@@ -14,21 +14,22 @@ class OrderService {
         return userId.id;
     }
 
-    async createSale(body, customer) {
-        const { totalPrice, deliveryAddress, deliveryNumber, sellerName } = body;
-        console.log(body);
-        const userId = await this.getUserId(customer.name);
-        const sellerId = await this.getUserId(sellerName);
-        console.log(sellerId, userId);
-        const newSale = await this.saleModel.create({
-            userId,
-            sellerId,
-            totalPrice,
-            deliveryAddress,
-            deliveryNumber,
-            status: 'Pendente' });
-            console.log('a');
-        return newSale;
+    async createSale(body) {
+        const { totalPrice, deliveryAddress, deliveryNumber, sellerName, user } = body;
+      const sellerId = await this.getUserId(sellerName);
+        try {
+            const newSale = await this.saleModel.create({
+                userId: user.id,
+                sellerId,
+                totalPrice,
+                deliveryAddress,
+                deliveryNumber,
+                status: 'Pendente' });
+            return newSale;
+        } catch (err) {
+            console.log(err);
+            return err; 
+        }
 }
 }
 
