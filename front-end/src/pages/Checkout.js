@@ -1,14 +1,16 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Header, OrderDetails } from '../components';
 
 export default class Checkout extends Component {
   render() {
+    const { history } = this.props;
     return (
       <div>
         <Header />
         <section>
           <h3>Finalizar Pedido</h3>
-          <OrderDetails />
+          <OrderDetails history={ history } />
         </section>
         <section>
           <h3>Detalhes e Endereço para Entrega</h3>
@@ -48,3 +50,7 @@ export default class Checkout extends Component {
     );
   }
 }
+
+Checkout.propTypes = {
+  history: PropTypes.shape.isRequired,
+};
