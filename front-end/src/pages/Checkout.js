@@ -43,7 +43,7 @@ export default class Checkout extends Component {
         <Header history={ history } />
         <section>
           <h3>Finalizar Pedido</h3>
-          <OrderDetails />
+          <OrderDetails history={ history } />
         </section>
         <section>
           <h3>Detalhes e Endereço para Entrega</h3>

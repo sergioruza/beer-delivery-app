@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import { AppConsumer } from '../context/appContext';
+import propTypes from 'prop-types';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
 
@@ -21,6 +22,9 @@ export default class OrderDetails extends Component {
   }
 
   render() {
+    const { history } = this.props;
+    const type = history.location.pathname;
+    console.log('TYPE', type);
     const COSTUMER = 'customer_checkout__';
     const ELEMENTORDER = 'element-order';
     const { carProducts } = this.state;
@@ -38,7 +42,9 @@ export default class OrderDetails extends Component {
             <th>Quantidade</th>
             <th>Valor Unitário</th>
             <th>Sub-total</th>
-            <th>Remover Item</th>
+            {type === '/customer/checkout' && (
+              <th>Remover Item</th>
+            )}
           </tr>
           {carProducts?.map((product, index) => (
             <tr key={ index }>
@@ -79,18 +85,21 @@ export default class OrderDetails extends Component {
                 {Number(product.price * product.quantity)
                   .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </td>
-              <td
-                data-testid={
-                  `${COSTUMER}${ELEMENTORDER}-table-remove-${index}`
-                }
-              >
-                <button
-                  type="button"
-                  onClick={ () => this.removeItem(product.id) }
+              {type === '/customer/checkout' && (
+
+                <td
+                  data-testid={
+                    `${COSTUMER}${ELEMENTORDER}-table-remove-${index}`
+                  }
                 >
-                  Remover
-                </button>
-              </td>
+                  <button
+                    type="button"
+                    onClick={ () => this.removeItem(product.id) }
+                  >
+                    Remover
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </table>
@@ -105,3 +114,7 @@ export default class OrderDetails extends Component {
     );
   }
 }
+
+OrderDetails.propTypes = {
+  history: propTypes.shape.isRequired,
+};
