@@ -25,6 +25,7 @@ export default class Checkout extends Component {
       ...this.state,
       user,
     };
+    console.log(saleDetails);
     const sale = await createSale(saleDetails);
     console.log(sale);
     history.push(`/customer/orders/${sale.id}`);

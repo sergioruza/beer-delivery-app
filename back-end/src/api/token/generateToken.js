@@ -10,8 +10,12 @@ const secretKey = async () => {
 };
 
 const generateToken = async (payload) => {
+  const options = {
+    expiresIn: '3d',
+    algorithm: 'HS256',
+  };
   const key = await secretKey();
-  const token = jwt.sign(payload, key);
+  const token = jwt.sign(payload, key, options);
   return token;
 };
 

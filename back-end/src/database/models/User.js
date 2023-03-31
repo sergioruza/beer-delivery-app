@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     role: { type: DataTypes.STRING, allowNull: false },
   }, { underscored: true, timestamps: false, tableName: 'users' });
   User.associate = ({ Sale }) => {
-    User.hasMany(Sale, { foreignKey: 'user_id', as: 'user' });
-    User.hasMany(Sale, { foreignKey: 'seller_id', as: 'seller' });
+    User.hasMany(Sale, { foreignKey: 'userId', as: 'user' });
+    // User.hasMany(Sale, { foreignKey: 'seller_id', as: 'seller' });
   };
   return User;
 };
