@@ -1,6 +1,7 @@
-const logout = (history) => {
+const logout = (history, type) => {
   localStorage.removeItem('user');
-  history.push('/login');
+  localStorage.removeItem('carrinho');
+  if (type !== 'login') history.push('/login');
 };
 
 export default logout;

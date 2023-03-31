@@ -16,7 +16,7 @@ class OrderService {
 
     async createSale(body) {
         const { totalPrice, deliveryAddress, deliveryNumber, sellerName, user } = body;
-        const sellerId = await this.getUserId(sellerName);
+      const sellerId = await this.getUserId(sellerName);
         try {
             const newSale = await this.saleModel.create({
                 userId: user.id,
@@ -24,7 +24,7 @@ class OrderService {
                 totalPrice,
                 deliveryAddress,
                 deliveryNumber,
-                status: 'pendente' });
+                status: 'Pendente' });
             return newSale;
         } catch (err) {
             console.log(err);

@@ -7,7 +7,7 @@ const sale = (DataTypes) => ({
   },
   userId: { type: DataTypes.INTEGER, allowNull: false, foreignKey: true },
   sellerId: { type: DataTypes.INTEGER, allowNull: false, foreignKey: true },
-  totalPrice: { type: DataTypes.FLOAT, allowNull: false },
+  totalPrice: { type: DataTypes.DECIMAL, allowNull: false },
   deliveryAddress: { type: DataTypes.STRING, allowNull: false },
   deliveryNumber: { type: DataTypes.STRING, allowNull: false },
   saleDate: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   const Sale = sequelize.define(
     'Sale',
     sale(DataTypes),
-    { underscored: true, timestamps: false, tableName: 'sales' },
+    { underscored: true, timestamps: false, tableName: 'sales', dialectOptions: { decimalNumbers: true } },
   );
   Sale.associate = ({ User, SalesProduct }) => {
     Sale.belongsTo(User, { foreignKey: 'userId', as: 'user', through: Sale });
