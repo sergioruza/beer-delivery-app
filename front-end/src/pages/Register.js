@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { loginAPI } from '../services/requests';
 import validateFields from '../utils/validateFields';
+import setLocalStorage from '../services/setLocalStorage';
 
 class Register extends React.Component {
   state = {
@@ -19,15 +20,15 @@ class Register extends React.Component {
 
     const { history } = this.props;
 
-    const { error, token } = await loginAPI(
+    const { error, token, id } = await loginAPI(
       '/register',
       { name: username, email, password },
     );
     if (error) {
       return this.setState({ invalidUser: true, errorMsg: error });
     }
-    const storageObj = { token, role: 'customer', name: username, email };
-    localStorage.setItem('user', JSON.stringify(storageObj));
+    const storageObj = { token, role: 'customer', name: username, email, id };
+    setLocalStorage('user', storageObj);
     history.push('/customer/products');
   };
 
