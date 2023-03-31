@@ -23,6 +23,4 @@ class LoginService {
   }
 }
 
-module.exports = {
-  LoginService,
-};
+module.exports = LoginService;

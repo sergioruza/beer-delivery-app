@@ -15,7 +15,7 @@ app.get('/coffee', (_req, res) => res.status(418).json('teste'));
 app.use('/login', routes.loginRoute);
 app.use('/register', routes.registerRoute);
 app.use('/products', routes.productsRoute);
-// app.use('/orders', routes.ordersRoute);
+app.use('/orders', routes.ordersRoute);
 
 // app.use(ErrorHandler.handle);
 

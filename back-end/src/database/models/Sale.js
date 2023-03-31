@@ -1,5 +1,10 @@
 const sale = (DataTypes) => ({
-  id: { type: DataTypes.INTEGER, primaryKey: true },
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   userId: { type: DataTypes.INTEGER, allowNull: false, foreignKey: true },
   sellerId: { type: DataTypes.INTEGER, allowNull: false, foreignKey: true },
   totalPrice: { type: DataTypes.FLOAT, allowNull: false },
