@@ -22,6 +22,7 @@ class Header extends Component {
           type === 'customer' && (
             <button
               type="button"
+              onClick={ () => history.push(`/${type}/products`) }
               data-testid={ `${ROUTE}__${PRODUCTS}` }
             >
               Produtos
@@ -31,6 +32,7 @@ class Header extends Component {
         }
         <button
           type="button"
+          onClick={ () => history.push(`/${type}/orders`) }
           data-testid={ `${ROUTE}__${ORDERS}` }
         >
           { ORDERSTYPE }
