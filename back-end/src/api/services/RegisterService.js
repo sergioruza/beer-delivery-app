@@ -21,7 +21,7 @@ class RegisterService {
         );
 
         const token = await generateToken(
-            { name: newUser.name, email: newUser.email, role: newUser.role },
+            { name: newUser.name, email: newUser.email, role: newUser.role, id: newUser.id },
             );
 
         return { token }; 

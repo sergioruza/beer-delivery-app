@@ -29,7 +29,6 @@ export default class OrderDetails extends Component {
         acc += value;
         return acc;
       }, 0);
-    console.log(total);
     return (
       <div>
         <table>

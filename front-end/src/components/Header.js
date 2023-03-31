@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import getOrderType from '../utils/getOrderType';
+import getLocalStorage from '../services/getLocalStorage';
 import logout from '../utils/logout';
 
 class Header extends Component {
   render() {
-    const { userName, type, history } = this.props;
+    const { history } = this.props;
+    const type = history.location.pathname.split('/')[1];
+    const username = getLocalStorage('user', { name: 'Matheus' });
+
     const ROUTE = 'customer_products';
     const PRODUCTS = 'element-navbar-link-products';
     const ORDERS = 'element-navbar-link-orders';
@@ -35,7 +39,7 @@ class Header extends Component {
         <span
           data-testid={ `${ROUTE}__${FULLNAME}` }
         >
-          { userName }
+          { username.name }
         </span>
 
         <button
@@ -51,8 +55,6 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  type: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
   history: PropTypes.func.isRequired,
 };
 

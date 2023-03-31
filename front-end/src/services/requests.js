@@ -14,4 +14,9 @@ export const getProducts = async () => {
   return data;
 };
 
+export const createSale = async (saleDetails) => {
+  const { data } = await api.post('/orders', { saleDetails }).catch((e) => e.response);
+  return data;
+};
+
 export default api;

@@ -19,7 +19,7 @@ class LoginService {
       name: user.name,
     };
     const token = await generateToken(payload);
-    return { token, role: user.role, name: user.name };
+    return { token, role: user.role, name: user.name, id: user.id };
   }
 }
 
