@@ -15,7 +15,7 @@ export const getProducts = async () => {
 };
 
 export const createSale = async (saleDetails) => {
-  const { data } = await api.post('/orders', { saleDetails }).catch((e) => e.response);
+  const { data } = await api.post('/orders', saleDetails).catch((e) => e.response);
   return data;
 };
 
