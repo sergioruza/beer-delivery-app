@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
+import getTotalPrice from '../utils/getTotalPrice';
 
 export default class OrderDetails extends Component {
   state = {
@@ -24,15 +25,10 @@ export default class OrderDetails extends Component {
   render() {
     const { history } = this.props;
     const type = history.location.pathname;
-    console.log('TYPE', type);
     const COSTUMER = 'customer_checkout__';
     const ELEMENTORDER = 'element-order';
     const { carProducts } = this.state;
-    const total = carProducts.map(({ price, quantity }) => price * quantity)
-      .reduce((acc, value) => {
-        acc += value;
-        return acc;
-      }, 0);
+    const total = getTotalPrice();
     return (
       <div>
         <table>
