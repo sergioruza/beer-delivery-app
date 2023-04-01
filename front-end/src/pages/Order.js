@@ -4,7 +4,7 @@ import { OrderDetails, Header } from '../components';
 
 const mock = {
   saleDate: '2023-03-31T21:27:01.493Z',
-  id: 4,
+  id: 1,
   userId: 3,
   sellerId: 2,
   totalPrice: 12.2,

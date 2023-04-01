@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { loginAPI } from '../services/requests';
 import validateFields from '../utils/validateFields';
+import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
-import logout from '../utils/logout';
 
 class Login extends React.Component {
   state = {
@@ -16,14 +16,17 @@ class Login extends React.Component {
 
   componentDidMount() {
     const { history } = this.props;
-    logout(history, 'login');
+    const user = getLocalStorage('user', 'default');
+    if (user !== 'default') {
+      history.push(`/${user.role}/products`);
+    }
   }
 
   handleLogin = async (event) => {
     event.preventDefault();
     const { email, password } = this.state;
-
     const { history } = this.props;
+
     const result = await loginAPI('/login', { email, password });
     const { error, role, token, name, id } = result;
     console.log(result);
