@@ -1,10 +1,12 @@
-const { Sale, User, sequelize, SalesProduct } = require('../../database/models');
+const { Sale, User, sequelize, SalesProduct, Product } = require('../../database/models');
+const formatedSalesProducts = require('../utils/formatedSalesProducts');
 const validateSale = require('./validations/validateSale');
 
 class OrderService {
     constructor() {
         this.saleModel = Sale;
         this.userModel = User;
+        this.productModel = Product;
         this.saleProductModel = SalesProduct;
     }
 
@@ -41,10 +43,13 @@ class OrderService {
     }
 
     async findOrdersByUserId(id) {
-        const allOrders = await this.saleModel.findAll({ where: { userId: id } });
-        console.log(allOrders);
-        if (!allOrders) return { error: 'Products not found', errorStatus: 404 };
-        return allOrders;
+        const allOrders = await this.saleModel.findAll({ where: { userId: Number(id) } });
+        const salesProducts = await this.saleProductModel.findAll();
+        const products = await this.productModel.findAll();
+        const newOrders = await formatedSalesProducts(allOrders, salesProducts, products);
+
+        if (!newOrders) return { error: 'Products not found', errorStatus: 404 };
+        return newOrders;
     }
 }
 

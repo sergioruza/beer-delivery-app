@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class SaleCard extends React.Component {
   render() {
@@ -8,34 +9,34 @@ export default class SaleCard extends React.Component {
 
     const userType = history.location.pathname.split('/')[1];
     const href = `/${userType}/orders/${id}`;
-    console.log(href);
     const formatedDate = new Date(saleDate).toLocaleDateString('pt-BR');
 
-    const ROUTE = 'customer-orders__element-';
+    const ROUTE = 'customer_orders__element-';
     const FOUR = 4;
     return (
       <div>
-        <div>
-          Pedido:
-          <span data-testid={ `${ROUTE}order-id-${id}` }>
-            {id.toString().padStart(FOUR, '0')}
+        <Link to={ href }>
+          <div>
+            Pedido:
+            <span data-testid={ `${ROUTE}order-id-${id}` }>
+              {id.toString().padStart(FOUR, '0')}
+            </span>
+          </div>
+          <span data-testid={ `${ROUTE}delivery-status-${id}` }>
+            {status}
           </span>
-        </div>
-        <span data-testid={ `${ROUTE}delivery-status-${id}` }>
-          {status}
-        </span>
-        <div>
-          <span data-testid={ `${ROUTE}order-date-${id}` }>
-            {formatedDate}
-          </span>
-        </div>
-        <div>
-          R$:
-          <span data-testid={ `${ROUTE}card-price-${id}` }>
-            {Number(totalPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-          </span>
-        </div>
-
+          <div>
+            <span data-testid={ `${ROUTE}order-date-${id}` }>
+              {formatedDate}
+            </span>
+          </div>
+          <div>
+            R$:
+            <span data-testid={ `${ROUTE}card-price-${id}` }>
+              {Number(totalPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+        </Link>
       </div>
     );
   }

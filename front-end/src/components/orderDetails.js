@@ -1,18 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 // import { AppConsumer } from '../context/appContext';
-import propTypes from 'prop-types';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
 import getTotalPrice from '../utils/getTotalPrice';
 
-export default class OrderDetails extends Component {
+export default class OrderDetails extends React.Component {
   state = {
     carProducts: [],
+    total: '',
   };
 
   componentDidMount() {
-    const getstorage = getLocalStorage('carrinho', []);
-    this.setState({ carProducts: getstorage });
+    const { orderProducts, totalOrder } = this.props;
+    console.log('oi');
+    console.log(orderProducts, totalOrder);
+    const newOrderProducts = orderProducts || getLocalStorage('carrinho', []);
+    const total = totalOrder || getTotalPrice();
+    this.setState({ carProducts: newOrderProducts, total });
   }
 
   removeItem(id) { // se o quantity for 0 ele remove
@@ -25,10 +29,10 @@ export default class OrderDetails extends Component {
   render() {
     const { history } = this.props;
     const type = history.location.pathname;
-    const COSTUMER = 'customer_checkout__';
+    const COSTUMER = type === '/custumer/checkout'
+      ? 'customer_checkout__' : 'customer_order_details__';
     const ELEMENTORDER = 'element-order';
-    const { carProducts } = this.state;
-    const total = getTotalPrice();
+    const { carProducts, total } = this.state;
     return (
       <div>
         <table>
@@ -110,7 +114,3 @@ export default class OrderDetails extends Component {
     );
   }
 }
-
-OrderDetails.propTypes = {
-  history: propTypes.shape.isRequired,
-};
