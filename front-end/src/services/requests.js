@@ -14,8 +14,13 @@ export const getProducts = async () => {
   return data;
 };
 
+export const getSalesByUserId = async (id) => {
+  const { data } = await api.get(`/orders/${id}`).catch((e) => e.response);
+  return data;
+};
+
 export const createSale = async (saleDetails) => {
-  console.log(saleDetails.user.token);
+  console.log(saleDetails);
   const { data } = await api.post('/orders', saleDetails, {
     headers: { Authorization: saleDetails.user.token },
   }).catch((e) => e.response);

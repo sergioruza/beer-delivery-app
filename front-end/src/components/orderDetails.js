@@ -1,34 +1,41 @@
-import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 // import { AppConsumer } from '../context/appContext';
-import propTypes from 'prop-types';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
 import getTotalPrice from '../utils/getTotalPrice';
 
-export default class OrderDetails extends Component {
+export default class OrderDetails extends React.Component {
   state = {
     carProducts: [],
+    total: '',
   };
 
   componentDidMount() {
-    const getstorage = getLocalStorage('carrinho', []);
-    this.setState({ carProducts: getstorage });
+    const { orderProducts, totalOrder } = this.props;
+    console.log(orderProducts, totalOrder);
+    const newOrderProducts = orderProducts || getLocalStorage('carrinho', []);
+    const total = totalOrder || getTotalPrice();
+    this.setState({ carProducts: newOrderProducts, total });
   }
 
   removeItem(id) { // se o quantity for 0 ele remove
     const carProducts = getLocalStorage('carrinho', []);
     const newProducts = carProducts.filter((p) => p.id !== id);
     setLocalStorage('carrinho', newProducts);
-    this.setState({ carProducts: newProducts });
+    const total = getTotalPrice();
+    this.setState({ carProducts: newProducts, total });
   }
 
   render() {
     const { history } = this.props;
     const type = history.location.pathname;
-    const COSTUMER = 'customer_checkout__';
+    const CUSTOMER_STRING = '/customer/checkout';
+    console.log(type);
+    const COSTUMER = type === CUSTOMER_STRING
+      ? 'customer_checkout__' : 'customer_order_details__';
     const ELEMENTORDER = 'element-order';
-    const { carProducts } = this.state;
-    const total = getTotalPrice();
+    const { carProducts, total } = this.state;
     return (
       <div>
         <table>
@@ -38,7 +45,7 @@ export default class OrderDetails extends Component {
             <th>Quantidade</th>
             <th>Valor Unitário</th>
             <th>Sub-total</th>
-            {type === '/customer/checkout' && (
+            {type === CUSTOMER_STRING && (
               <th>Remover Item</th>
             )}
           </tr>
@@ -81,7 +88,7 @@ export default class OrderDetails extends Component {
                 {Number(product.price * product.quantity)
                   .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </td>
-              {type === '/customer/checkout' && (
+              {type === CUSTOMER_STRING && (
 
                 <td
                   data-testid={
@@ -112,5 +119,7 @@ export default class OrderDetails extends Component {
 }
 
 OrderDetails.propTypes = {
-  history: propTypes.shape.isRequired,
+  history: PropTypes.shape.isRequired,
+  orderProducts: PropTypes.shape.isRequired,
+  totalOrder: PropTypes.shape.isRequired,
 };

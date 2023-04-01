@@ -1,54 +1,67 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { OrderDetails, Header } from '../components';
-
-const mock = {
-  saleDate: '2023-03-31T21:27:01.493Z',
-  id: 1,
-  userId: 3,
-  sellerId: 2,
-  totalPrice: 12.2,
-  deliveryAddress: 'rua sla doq',
-  deliveryNumber: '240',
-  status: 'Pendente',
-};
+import { getSalesByUserId } from '../services/requests';
+import getLocalStorage from '../services/getLocalStorage';
 
 export default class Order extends Component {
+  state = {
+    order: {},
+    renderDetails: false,
+  };
+
+  async componentDidMount() {
+    const { history } = this.props;
+    const type = history.location.pathname.split('/')[3];
+    const userId = getLocalStorage('user', { id: 3 }).id;
+    const newOrders = await getSalesByUserId(userId);
+    const order = newOrders.find((o) => o.id === Number(type));
+    this.setState({ order, renderDetails: true });
+  }
+
   render() {
     const { history } = this.props;
+    const { order, renderDetails } = this.state;
     const ROUTE = 'customer_order_details__';
-    const formatedDate = new Date(mock.saleDate).toLocaleDateString('pt-BR');
-    const ELEMENT_DETAILS = 'element-order-details-label';
+    const formatedDate = new Date(order.saleDate).toLocaleDateString('pt-BR');
+    const ELEMENT_DETAILS = 'element-order-details-label-';
     return (
       <div>
         <Header history={ history } />
-        <section>
+        <div>
           <div>
-            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}order-id=${mock.id}` }>
-              {mock.id}
+            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}order-id` }>
+              {order.id}
             </span>
             <div>
               P. Vend:
-              <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}seller-name-${mock.id}` }>
-                {mock.sellerId}
+              <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}seller-name` }>
+                {order.sellerName}
               </span>
             </div>
-            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}order-date-${mock.id}` }>
+            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}order-date` }>
               { formatedDate }
             </span>
-            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}delivery-status-${mock.id}` }>
-              {mock.status}
+            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}delivery-status` }>
+              {order.status}
             </span>
             <button
               type="button"
-              disabled={ mock.status !== 'Em Trânsito' }
-              data-testid={ `${ROUTE}button-delivery-check${mock.id}` }
+              disabled={ order.status !== 'Em Trânsito' }
+              data-testid={ `${ROUTE}button-delivery-check` }
             >
-              {mock.status !== 'Entregue' ? 'Marcar como entregue' : 'Ja foi entregue'}
+              {order.status !== 'Entregue' ? 'Marcar como entregue' : 'Ja foi entregue'}
             </button>
           </div>
-          <OrderDetails history={ history } />
-        </section>
+        </div>
+        {
+          renderDetails && <OrderDetails
+            orderProducts={ order.products }
+            totalOrder={ order.totalPrice }
+            history={ history }
+          />
+        }
+
       </div>
     );
   }

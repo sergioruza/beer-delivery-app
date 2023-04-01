@@ -3,6 +3,7 @@ import Register from './Register';
 import Products from './Products';
 import Checkout from './Checkout';
 import Order from './Order';
+import Orders from './Orders';
 import Seller from './Seller';
 
 export {
@@ -12,4 +13,5 @@ export {
   Checkout,
   Order,
   Seller,
+  Orders,
 };

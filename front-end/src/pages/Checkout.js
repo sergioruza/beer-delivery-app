@@ -29,6 +29,7 @@ export default class Checkout extends Component {
     console.log(products);
     const sale = await createSale(saleDetails);
     console.log(sale);
+    localStorage.removeItem('carrinho');
 
     history.push(`/customer/orders/${sale.id}`);
   };
