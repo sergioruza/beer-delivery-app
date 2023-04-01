@@ -12,6 +12,12 @@ class OrderController {
         if (type) return this.res.status(type).json({ message });
         return this.res.status(201).json(message);
     }
+
+    async getOrdersByUserId() {
+        const { id } = this.req.params;
+        const orders = await this.service.findOrdersByUserId(id);
+        return this.res.status(201).json(orders);
+    }
 }
 
 module.exports = OrderController;

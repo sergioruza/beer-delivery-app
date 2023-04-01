@@ -1,5 +1,5 @@
 const { Sale, User, sequelize, SalesProduct } = require('../../database/models');
-const validateSale = require('./validations/validateSale');
+// const validateSale = require('./validations/validateSale');
 
 class OrderService {
     constructor() {
@@ -17,9 +17,8 @@ class OrderService {
     }
 
     async createSale(body) {
-        if (validateSale(body)) return { type: 400, message: 'Bad Request' };
+        // if (validateSale(body)) return { type: 400, message: 'Bad Request' };
         const { totalPrice, deliveryAddress, deliveryNumber, sellerName, user, products } = body;
-
         const newSale = await sequelize.transaction(async (t) => {
             const sellerId = await this.getUserId(sellerName);
             const sale = await this.saleModel.create({
@@ -39,6 +38,12 @@ class OrderService {
             return { type: null, message: sale };
         });
         return newSale;
+    }
+
+    async findOrdersByUserId(id) {
+        const allOrders = await this.saleModel.findAll({ where: { userId: id } });
+        if (!allOrders) return { error: 'Products not found', errorStatus: 404 };
+        return allOrders;
     }
 }
 
