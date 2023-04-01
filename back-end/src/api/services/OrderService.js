@@ -43,7 +43,7 @@ class OrderService {
     }
 
     async findOrdersByUserId(id) {
-        const allOrders = await this.saleModel.findAll({ where: { userId: Number(id) } });
+        const allOrders = await this.saleModel.findAll({ $or: [{ sellerId: id }, { userId: id }] });
         const salesProducts = await this.saleProductModel.findAll();
         const products = await this.productModel.findAll();
         const newOrders = await formatedSalesProducts(allOrders, salesProducts, products);

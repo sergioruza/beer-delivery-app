@@ -11,6 +11,7 @@ export default class Orders extends React.Component {
 
   async componentDidMount() {
     const userId = getLocalStorage('user', { id: 3 }).id;
+    console.log(userId);
     const newOrders = await getSalesByUserId(userId);
     this.setState({ orders: newOrders });
   }
@@ -18,6 +19,7 @@ export default class Orders extends React.Component {
   render() {
     const { history } = this.props;
     const { orders } = this.state;
+    console.log('oi');
     return (
       <div>
         {

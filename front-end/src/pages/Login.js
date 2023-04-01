@@ -36,7 +36,8 @@ class Login extends React.Component {
     }
     const storageObj = { token, role, name, email, id };
     setLocalStorage('user', storageObj);
-    history.push(`/${role}/products`);
+    const rote = role === 'customer' ? 'products' : 'orders';
+    history.push(`/${role}/${rote}`);
   };
 
   handleChange = (event) => {
