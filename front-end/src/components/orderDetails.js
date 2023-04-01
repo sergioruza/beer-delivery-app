@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 // import { AppConsumer } from '../context/appContext';
 import getLocalStorage from '../services/getLocalStorage';
@@ -12,7 +13,6 @@ export default class OrderDetails extends React.Component {
 
   componentDidMount() {
     const { orderProducts, totalOrder } = this.props;
-    console.log('oi');
     console.log(orderProducts, totalOrder);
     const newOrderProducts = orderProducts || getLocalStorage('carrinho', []);
     const total = totalOrder || getTotalPrice();
@@ -23,13 +23,16 @@ export default class OrderDetails extends React.Component {
     const carProducts = getLocalStorage('carrinho', []);
     const newProducts = carProducts.filter((p) => p.id !== id);
     setLocalStorage('carrinho', newProducts);
-    this.setState({ carProducts: newProducts });
+    const total = getTotalPrice();
+    this.setState({ carProducts: newProducts, total });
   }
 
   render() {
     const { history } = this.props;
     const type = history.location.pathname;
-    const COSTUMER = type === '/custumer/checkout'
+    const CUSTOMER_STRING = '/customer/checkout';
+    console.log(type);
+    const COSTUMER = type === CUSTOMER_STRING
       ? 'customer_checkout__' : 'customer_order_details__';
     const ELEMENTORDER = 'element-order';
     const { carProducts, total } = this.state;
@@ -42,7 +45,7 @@ export default class OrderDetails extends React.Component {
             <th>Quantidade</th>
             <th>Valor Unitário</th>
             <th>Sub-total</th>
-            {type === '/customer/checkout' && (
+            {type === CUSTOMER_STRING && (
               <th>Remover Item</th>
             )}
           </tr>
@@ -85,7 +88,7 @@ export default class OrderDetails extends React.Component {
                 {Number(product.price * product.quantity)
                   .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </td>
-              {type === '/customer/checkout' && (
+              {type === CUSTOMER_STRING && (
 
                 <td
                   data-testid={
@@ -114,3 +117,9 @@ export default class OrderDetails extends React.Component {
     );
   }
 }
+
+OrderDetails.propTypes = {
+  history: PropTypes.shape.isRequired,
+  orderProducts: PropTypes.shape.isRequired,
+  totalOrder: PropTypes.shape.isRequired,
+};

@@ -7,6 +7,7 @@ import getLocalStorage from '../services/getLocalStorage';
 export default class Order extends Component {
   state = {
     order: {},
+    renderDetails: false,
   };
 
   async componentDidMount() {
@@ -15,13 +16,12 @@ export default class Order extends Component {
     const userId = getLocalStorage('user', { id: 3 }).id;
     const newOrders = await getSalesByUserId(userId);
     const order = newOrders.find((o) => o.id === Number(type));
-    console.log(order);
-    this.setState({ order });
+    this.setState({ order, renderDetails: true });
   }
 
   render() {
     const { history } = this.props;
-    const { order } = this.state;
+    const { order, renderDetails } = this.state;
     const ROUTE = 'customer_order_details__';
     const formatedDate = new Date(order.saleDate).toLocaleDateString('pt-BR');
     const ELEMENT_DETAILS = 'element-order-details-label-';
@@ -54,11 +54,14 @@ export default class Order extends Component {
             </button>
           </div>
         </div>
-        <OrderDetails
-          orderProducts={ order.products }
-          totalOrder={ order.totalPrice }
-          history={ history }
-        />
+        {
+          renderDetails && <OrderDetails
+            orderProducts={ order.products }
+            totalOrder={ order.totalPrice }
+            history={ history }
+          />
+        }
+
       </div>
     );
   }
