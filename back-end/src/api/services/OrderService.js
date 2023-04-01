@@ -17,7 +17,7 @@ class OrderService {
     }
 
     async createSale(body) {
-        // if (validateSale(body)) return { type: 400, message: 'Bad Request' };
+        if (validateSale(body)) return { type: 400, message: 'Bad Request' };
         const { totalPrice, deliveryAddress, deliveryNumber, sellerName, user, products } = body;
 
         const newSale = await sequelize.transaction(async (t) => {
