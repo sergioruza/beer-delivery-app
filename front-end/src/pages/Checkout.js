@@ -20,12 +20,16 @@ export default class Checkout extends Component {
 
   createNewSale = async () => {
     const user = getLocalStorage('user', { name: 'romulo' });
+    const products = getLocalStorage('carrinho', []);
     const { history } = this.props;
     const saleDetails = {
       ...this.state,
       user,
+      products,
     };
+    console.log(products);
     const sale = await createSale(saleDetails);
+    console.log(sale);
 
     history.push(`/customer/orders/${sale.id}`);
   };

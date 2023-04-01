@@ -18,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
   const Sale = sequelize.define(
     'Sale',
     sale(DataTypes),
-    { underscored: true, timestamps: false, tableName: 'sales', dialectOptions: { decimalNumbers: true } },
+    {
+       underscored: true,
+       timestamps: false,
+       tableName: 'sales',
+       dialectOptions: { decimalNumbers: true },
+      },
   );
   Sale.associate = ({ User, SalesProduct }) => {
     Sale.belongsTo(User, { foreignKey: 'userId', as: 'user', through: Sale });
