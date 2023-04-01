@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
        dialectOptions: { decimalNumbers: true },
       },
   );
-  Sale.associate = ({ User, Sales_Product }) => {
+  Sale.associate = ({ User, SalesProduct }) => {
     Sale.belongsTo(User, { foreignKey: 'userId', as: 'user', through: Sale });
     Sale.belongsTo(User, { foreignKey: 'sellerId', as: 'seller', through: Sale });
-    Sale.hasMany(Sales_Product, { foreignKey: 'saleId', as: 'sale' });
+    Sale.hasMany(SalesProduct, { foreignKey: 'saleId', as: 'sale' });
   };
   return Sale;
 };
