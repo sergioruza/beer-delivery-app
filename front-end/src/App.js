@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
-import { Login, Products, Register, Checkout, Order, Seller, Orders } from './pages';
+import { Login, Products, Register, Checkout, Order, Orders } from './pages';
 
 function App() {
   return (
