@@ -5,11 +5,13 @@ import { getSalesByUserId } from '../services/requests';
 import getLocalStorage from '../services/getLocalStorage';
 
 const LASTITEM = 1;
+const emTransito = 'Em Trânsito';
 export default class Order extends Component {
   state = {
     order: {},
     renderDetails: false,
     userType: '',
+    status: '',
   };
 
   async componentDidMount() {
@@ -18,12 +20,12 @@ export default class Order extends Component {
     const userId = getLocalStorage('user', { id: 3 }).id;
     const newOrders = await getSalesByUserId(userId);
     const order = newOrders.find((o) => o.id === Number(pathName.at(-LASTITEM)));
-    this.setState({ order, renderDetails: true, userType: pathName.at(1) });
+    this.setState({ order, renderDetails: true, userType: pathName.at(1), status: order.status });
   }
 
   render() {
     const { history } = this.props;
-    const { order, renderDetails, userType } = this.state;
+    const { order, renderDetails, userType, status } = this.state;
     console.log(userType);
     const ROUTE = `${userType}_order_details__`;
     const formatedDate = new Date(order.saleDate).toLocaleDateString('pt-BR');
@@ -48,30 +50,34 @@ export default class Order extends Component {
               {formatedDate}
             </span>
             <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}delivery-status` }>
-              {order.status}
+              { status}
             </span>
             {userType === 'customer' && (
 
               <button
                 type="button"
-                disabled={ order.status !== 'Em Trânsito' }
+                disabled={ status !== emTransito }
                 data-testid={ `${ROUTE}button-delivery-check` }
               >
-                {order.status !== 'Entregue' ? 'Marcar como entregue' : 'Ja foi entregue'}
+                {status !== 'Entregue' ? 'Marcar como entregue' : 'Ja foi entregue'}
               </button>
             )}
             {userType === 'seller' && (
               <div>
                 <button
                   type="button"
+                  onClick={ () => this.setState({ status: 'Preparando' }) }
                   data-testid="seller_order_details__button-preparing-check"
+                  disabled={ status !== 'Pendente' }
                 >
                   PREPARAR PEDIDO
                 </button>
 
                 <button
                   type="button"
+                  onClick={ () => this.setState({ status: emTransito }) }
                   data-testid="seller_order_details__button-dispatch-check"
+                  disabled={ status !== 'Preparando' }
                 >
                   SAIU PARA ENTREGA
                 </button>
