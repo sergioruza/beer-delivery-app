@@ -18,12 +18,13 @@ export default class Order extends Component {
     const userId = getLocalStorage('user', { id: 3 }).id;
     const newOrders = await getSalesByUserId(userId);
     const order = newOrders.find((o) => o.id === Number(pathName.at(-LASTITEM)));
-    this.setState({ order, renderDetails: true, userType: pathName.at(2) });
+    this.setState({ order, renderDetails: true, userType: pathName.at(1) });
   }
 
   render() {
     const { history } = this.props;
     const { order, renderDetails, userType } = this.state;
+    console.log(userType);
     const ROUTE = `${userType}_order_details__`;
     const formatedDate = new Date(order.saleDate).toLocaleDateString('pt-BR');
     const ELEMENT_DETAILS = 'element-order-details-label-';
@@ -60,7 +61,7 @@ export default class Order extends Component {
               </button>
             )}
             {userType === 'seller' && (
-              <>
+              <div>
                 <button
                   type="button"
                   data-testid="seller_order_details__button-preparing-check"
@@ -74,7 +75,7 @@ export default class Order extends Component {
                 >
                   SAIU PARA ENTREGA
                 </button>
-              </>
+              </div>
             )}
           </div>
         </div>
