@@ -29,11 +29,9 @@ export default class OrderDetails extends React.Component {
 
   render() {
     const { history } = this.props;
-    const type = history.location.pathname;
-    const CUSTOMER_STRING = '/customer/checkout';
-    console.log(type);
-    const COSTUMER = type === CUSTOMER_STRING
-      ? 'customer_checkout__' : 'customer_order_details__';
+    const pathName = history.location.pathname.split('/');
+    const COSTUMER = pathName[3] === 'checkout'
+      ? `${pathName.at(2)}_checkout__` : `${pathName.at(2)}_order_details__`;
     const ELEMENTORDER = 'element-order';
     const { carProducts, total } = this.state;
     return (
