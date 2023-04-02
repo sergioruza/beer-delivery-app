@@ -18,6 +18,11 @@ class OrderController {
         const orders = await this.service.findOrdersByUserId(id);
         return this.res.status(201).json(orders);
     }
+
+    async updateStatusById() {
+        const orders = await this.service.updateStatusById(this.req.body);
+        return this.res.status(200).json(orders);
+    }
 }
 
 module.exports = OrderController;
