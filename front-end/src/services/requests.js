@@ -27,4 +27,12 @@ export const createSale = async (saleDetails) => {
   return data;
 };
 
+export const patchSale = async (endpoint, body) => {
+  const { data } = await api.patch(endpoint, body, {
+    headers: { Authorization: body.token },
+  }).catch((e) => e.response);
+
+  return data;
+};
+
 export default api;

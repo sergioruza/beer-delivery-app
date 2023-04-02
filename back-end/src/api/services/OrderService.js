@@ -51,6 +51,11 @@ class OrderService {
         if (!newOrders) return { error: 'Products not found', errorStatus: 404 };
         return newOrders;
     }
+
+    async updateStatusById({ status, id }) {
+        const orders = await this.saleModel.update({ status }, { where: { id } });
+        return orders;
+    }
 }
 
 module.exports = OrderService;

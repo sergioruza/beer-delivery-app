@@ -29,11 +29,9 @@ export default class OrderDetails extends React.Component {
 
   render() {
     const { history } = this.props;
-    const type = history.location.pathname;
-    const CUSTOMER_STRING = '/customer/checkout';
-    console.log(type);
-    const COSTUMER = type === CUSTOMER_STRING
-      ? 'customer_checkout__' : 'customer_order_details__';
+    const pathName = history.location.pathname.split('/');
+    const COSTUMER = pathName[2] === 'checkout'
+      ? `${pathName.at(1)}_checkout__` : `${pathName.at(1)}_order_details__`;
     const ELEMENTORDER = 'element-order';
     const { carProducts, total } = this.state;
     return (
@@ -45,7 +43,7 @@ export default class OrderDetails extends React.Component {
             <th>Quantidade</th>
             <th>Valor Unitário</th>
             <th>Sub-total</th>
-            {type === CUSTOMER_STRING && (
+            {(pathName.at(1) === 'customer' && pathName.at(2) === 'checkout') && (
               <th>Remover Item</th>
             )}
           </tr>
@@ -88,7 +86,7 @@ export default class OrderDetails extends React.Component {
                 {Number(product.price * product.quantity)
                   .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </td>
-              {type === CUSTOMER_STRING && (
+              {(pathName.at(1) === 'customer' && pathName.at(2) === 'checkout') && (
 
                 <td
                   data-testid={
