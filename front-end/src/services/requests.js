@@ -14,23 +14,20 @@ export const getProducts = async () => {
   return data;
 };
 
-export const getSalesByUserId = async (id) => {
+export const getOrdersByUserId = async (id) => {
   const { data } = await api.get(`/orders/${id}`).catch((e) => e.response);
   return data;
 };
 
-export const createSale = async (saleDetails) => {
-  console.log(saleDetails);
-  const { data } = await api.post('/orders', saleDetails, {
-    headers: { Authorization: saleDetails.user.token },
-  }).catch((e) => e.response);
+export const createSale = async (body) => {
+  const headers = { headers: { Authorization: body.user.token } };
+  const { data } = await api.post('/orders', body, headers).catch((e) => e.response);
   return data;
 };
 
 export const patchSale = async (endpoint, body) => {
-  const { data } = await api.patch(endpoint, body, {
-    headers: { Authorization: body.token },
-  }).catch((e) => e.response);
+  const headers = { headers: { Authorization: body.token } };
+  const { data } = await api.patch(endpoint, body, headers).catch((e) => e.response);
 
   return data;
 };

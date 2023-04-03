@@ -4,7 +4,6 @@ import Products from './Products';
 import Checkout from './Checkout';
 import Order from './Order';
 import Orders from './Orders';
-import Seller from './Seller';
 
 export {
   Login,
@@ -12,6 +11,5 @@ export {
   Products,
   Checkout,
   Order,
-  Seller,
   Orders,
 };

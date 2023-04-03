@@ -15,5 +15,5 @@ export default function validateFields(email, password, username) {
     return 'Digite uma senha com no mínimo 6 caracteres';
   }
 
-  return true;
+  return false;
 }

@@ -6,60 +6,47 @@ import setLocalStorage from '../services/setLocalStorage';
 
 class Register extends React.Component {
   state = {
-    username: '',
+    name: '',
     email: '',
     password: '',
-    invalidUser: false,
-    errorMsg: '',
-    loginBtnDisable: true,
+    showMsg: false,
+    message: '',
+    disableLoginBtn: true,
   };
 
   handleRegister = async (event) => {
     event.preventDefault();
-    const { email, password, username } = this.state;
-
+    const { email, password, name } = this.state;
     const { history } = this.props;
 
-    const { error, token, id } = await loginAPI(
-      '/register',
-      { name: username, email, password },
-    );
-    if (error) {
-      return this.setState({ invalidUser: true, errorMsg: error });
-    }
-    const storageObj = { token, role: 'customer', name: username, email, id };
+    const { error, token, id } = await loginAPI('/register', { name, email, password });
+    if (error) return this.setState({ showMsg: true, message: error });
+
+    const storageObj = { token, role: 'customer', name, email, id };
     setLocalStorage('user', storageObj);
+
     history.push('/customer/products');
   };
 
-  handleChange = (event) => {
-    const { target } = event;
-    const { name, value } = target;
-
-    this.setState({ [name]: value }, () => {
-      const { email, password, username } = this.state;
-      const invalidFieldsMessage = validateFields(email, password, username);
-
-      if (invalidFieldsMessage !== true) {
-        return this.setState({
-          invalidUser: true, errorMsg: invalidFieldsMessage, loginBtnDisable: true });
-      }
-
-      this.setState({ invalidUser: false, loginBtnDisable: false });
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value }, () => {
+      const { name, email, password } = this.state;
+      const authUser = validateFields(email, password, name);
+      this.setState({ showMsg: authUser, message: authUser, disableLoginBtn: authUser });
     });
   };
 
   render() {
-    const { username, email, password, invalidUser,
-      errorMsg, loginBtnDisable } = this.state;
+    const { name, email, password, message,
+      showMsg, disableLoginBtn } = this.state;
 
     return (
       <div>
         <h1>Registro</h1>
         <input
           type="text"
-          name="username"
-          value={ username }
+          name="name"
+          value={ name }
           placeholder="nome"
           onChange={ this.handleChange }
           data-testid="common_register__input-name"
@@ -84,7 +71,7 @@ class Register extends React.Component {
         <button
           type="submit"
           value="Cadastrar"
-          disabled={ loginBtnDisable }
+          disabled={ disableLoginBtn }
           onClick={ this.handleRegister }
           data-testid="common_register__button-register"
         >
@@ -92,11 +79,11 @@ class Register extends React.Component {
 
         </button>
         {
-          invalidUser && (
+          showMsg && (
             <span
               data-testid="common_register__element-invalid_register"
             >
-              {errorMsg}
+              {message}
             </span>
           )
         }

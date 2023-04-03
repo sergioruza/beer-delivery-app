@@ -8,14 +8,14 @@ class Header extends Component {
   render() {
     const { history } = this.props;
     const type = history.location.pathname.split('/')[1];
-    const username = getLocalStorage('user', { name: 'Matheus' });
+    const { name } = getLocalStorage('user', { name: 'Matheus' });
 
     const ROUTE = 'customer_products';
     const PRODUCTS = 'element-navbar-link-products';
     const ORDERS = 'element-navbar-link-orders';
     const LOGOUT = 'element-navbar-link-logout';
     const FULLNAME = 'element-navbar-user-full-name';
-    const ORDERSTYPE = getOrderType(type);
+    const ROLETYPE = getOrderType(type);
     return (
       <div>
         {
@@ -35,13 +35,13 @@ class Header extends Component {
           onClick={ () => history.push(`/${type}/orders`) }
           data-testid={ `${ROUTE}__${ORDERS}` }
         >
-          { ORDERSTYPE }
+          { ROLETYPE }
         </button>
 
         <span
           data-testid={ `${ROUTE}__${FULLNAME}` }
         >
-          { username.name }
+          { name }
         </span>
 
         <button

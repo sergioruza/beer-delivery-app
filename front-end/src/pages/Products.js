@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Header } from '../components';
 import ProductCard from '../components/ProductCard';
 import { AppConsumer } from '../context/appContext';
+import getTotalPrice from '../utils/getTotalPrice';
 
 export default class Products extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class Products extends Component {
             <button
               data-testid="customer_products__button-cart"
               onClick={ () => history.push('/customer/checkout') }
-              disabled={ Number(carValue) === 0 }
+              disabled={ Number(getTotalPrice().toFixed(2)) === 0 }
               type="button"
             >
               <div>

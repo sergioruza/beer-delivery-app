@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 export default class SaleCard extends React.Component {
   render() {
     const { details, history } = this.props;
-    console.log(details);
     const { id, status, saleDate, totalPrice, deliveryAddress } = details;
 
     const userType = history.location.pathname.split('/')[1];
