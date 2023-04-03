@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SaleCard from '../components/SaleCard';
 import getLocalStorage from '../services/getLocalStorage';
 import { getSalesByUserId } from '../services/requests';
+import { Header } from '../components';
 
 export default class Orders extends React.Component {
   state = {
@@ -22,6 +23,7 @@ export default class Orders extends React.Component {
     console.log('oi');
     return (
       <div>
+        <Header history={ history } />
         {
           orders.map((s) => <SaleCard key={ s.id } details={ s } history={ history } />)
         }
