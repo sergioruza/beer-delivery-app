@@ -1,9 +1,8 @@
 import getLocalStorage from '../services/getLocalStorage';
 
 const getTotalPrice = () => {
-  const carProducts = getLocalStorage('carrinho', []);
-  const total = carProducts.map(({ price, quantity }) => price * quantity)
-    .reduce((acc, value) => acc + value, 0);
+  const car = getLocalStorage('carrinho', []);
+  const total = car.map((i) => i.price * i.quantity).reduce((a, b) => a + b, 0);
   return total;
 };
 

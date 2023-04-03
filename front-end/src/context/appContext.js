@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 // import produtos from './mockProducts';
 import { getProducts } from '../services/requests';
+import getTotalPrice from '../utils/getTotalPrice';
 
 const AppContext = React.createContext();
 
@@ -14,31 +15,25 @@ class Provider extends Component {
     carValue: 0,
   };
 
-  products = async () => {
+  getAllProducts = async () => {
     const { listProducts } = this.state;
     if (listProducts.length === 0) {
-      const data = await getProducts();
-      this.setData(data);
+      const carValue = getTotalPrice().toFixed(2);
+      const allProducts = await getProducts();
+      this.setState({ listProducts: allProducts, carValue });
     }
   };
 
-  setCarValue = (value) => {
-    this.setState(() => ({ carValue: value }));
-  };
-
-  setData = (listProducts) => {
-    this.setState(() => ({ listProducts }));
-  };
+  setCarValue = (newValue) => { this.setState(() => ({ carValue: newValue })); };
 
   render() {
-    this.products();
+    this.getAllProducts();
     const { children } = this.props;
-
     const { listProducts, carValue } = this.state;
-    const { setData, setCarValue } = this;
+    const { setCarValue } = this;
 
     return (
-      <AppProvider value={ { listProducts, setData, carValue, setCarValue } }>
+      <AppProvider value={ { listProducts, carValue, setCarValue } }>
         { children }
       </AppProvider>
     );

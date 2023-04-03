@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { OrderDetails, Header } from '../components';
-import { getSalesByUserId, patchSale } from '../services/requests';
+import { getOrdersByUserId, patchSale } from '../services/requests';
 import getLocalStorage from '../services/getLocalStorage';
 
-const LASTITEM = 1;
 const emTransito = 'Em Trânsito';
 export default class Order extends Component {
   state = {
@@ -18,8 +17,8 @@ export default class Order extends Component {
     const { history } = this.props;
     const pathName = history.location.pathname.split('/');
     const userId = getLocalStorage('user', { id: 3 }).id;
-    const newOrders = await getSalesByUserId(userId);
-    const order = newOrders.find((o) => o.id === Number(pathName.at(-LASTITEM)));
+    const allOrders = await getOrdersByUserId(userId);
+    const order = allOrders.find((o) => o.id === Number(pathName[3]));
     this.setState({
       order,
       renderDetails: true,
@@ -29,17 +28,14 @@ export default class Order extends Component {
   }
 
   updateStatus = async (id, status) => {
-    console.log('vim');
     const user = getLocalStorage('user', { id: 3 });
-    const sla = await patchSale('/orders', { id, status, token: user.token });
-    console.log(sla);
+    await patchSale('/orders', { id, status, token: user.token });
     this.setState({ status });
   };
 
   render() {
     const { history } = this.props;
     const { order, renderDetails, userType, status } = this.state;
-    console.log(userType);
     const ROUTE = `${userType}_order_details__`;
     const formatedDate = new Date(order.saleDate).toLocaleDateString('pt-BR');
     const ELEMENT_DETAILS = 'element-order-details-label-';

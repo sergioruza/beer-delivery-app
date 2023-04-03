@@ -9,16 +9,16 @@ class Login extends React.Component {
   state = {
     email: '',
     password: '',
-    invalidUser: false,
-    errorMsg: '',
-    loginBtnDisable: true,
+    showMsg: false,
+    message: '',
+    disableLoginBtn: true,
   };
 
   componentDidMount() {
     const { history } = this.props;
     const user = getLocalStorage('user', 'default');
-    const rote = user.role === 'customer' ? 'products' : 'orders';
     if (user !== 'default') {
+      const rote = user.role === 'customer' ? 'products' : 'orders';
       history.push(`/${user.role}/${rote}`);
     }
   }
@@ -28,36 +28,28 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const { history } = this.props;
 
-    const result = await loginAPI('/login', { email, password });
-    const { error, role, token, name, id } = result;
-    console.log(result);
+    const user = await loginAPI('/login', { email, password });
+    const { error, role, token, name, id } = user;
+    if (error) return this.setState({ showMsg: true, message: error });
 
-    if (error) {
-      return this.setState({ invalidUser: true, errorMsg: error });
-    }
-    const storageObj = { token, role, name, email, id };
-    setLocalStorage('user', storageObj);
+    const userToStorage = { token, role, name, email, id };
+    setLocalStorage('user', userToStorage);
+
     const rote = role === 'customer' ? 'products' : 'orders';
     history.push(`/${role}/${rote}`);
   };
 
-  handleChange = (event) => {
-    const { target } = event;
-    const { name, value } = target;
+  handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value }, () => {
       const { email, password } = this.state;
-      const invalidFieldsMessage = validateFields(email, password);
-      if (invalidFieldsMessage !== true) {
-        return this.setState({
-          invalidUser: true, errorMsg: invalidFieldsMessage, loginBtnDisable: true });
-      }
-      this.setState({ invalidUser: false, loginBtnDisable: false });
+      const authUser = validateFields(email, password);
+      this.setState({ showMsg: authUser, message: authUser, disableLoginBtn: authUser });
     });
   };
 
   render() {
-    const { email, password, invalidUser, errorMsg, loginBtnDisable } = this.state;
     const { history } = this.props;
+    const { email, password, showMsg, message, disableLoginBtn } = this.state;
     return (
       <div>
         <input
@@ -79,7 +71,7 @@ class Login extends React.Component {
         <button
           type="button"
           onClick={ this.handleLogin }
-          disabled={ loginBtnDisable }
+          disabled={ disableLoginBtn }
           data-testid="common_login__button-login"
         >
           Login
@@ -92,11 +84,11 @@ class Login extends React.Component {
           Ainda não tenho conta
         </button>
         {
-          invalidUser && (
+          showMsg && (
             <span
               data-testid="common_login__element-invalid-email"
             >
-              {errorMsg}
+              {message}
             </span>
           )
         }

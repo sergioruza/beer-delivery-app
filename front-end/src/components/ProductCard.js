@@ -13,11 +13,11 @@ class ProductCard extends React.Component {
     const { id } = this.props;
     const carProducts = getLocalStorage('carrinho', []);
     const product = carProducts.find((p) => p.id === id);
-    if (product) this.setState({ counter: product.quantity }, () => this.updateCar());
+    if (product) this.setState({ counter: product.quantity });
   }
 
   updateCar = () => {
-    const { price, img, title, id } = this.props;
+    const { price, img, title, id, setCarValue } = this.props;
     const { counter } = this.state;
 
     const newProduct = { price, img, title, id, quantity: counter };
@@ -34,30 +34,28 @@ class ProductCard extends React.Component {
     }
 
     setLocalStorage('carrinho', carProducts);
-    this.sumProducts();
+    console.log(getTotalPrice());
+    setCarValue(getTotalPrice().toFixed(2));
   };
 
-  increment = (counter) => {
-    if (counter < 100) this.setState({ counter }, () => this.updateCar());
+  increment = (coun) => {
+    if (coun < 100) this.setState({ counter: coun }, () => this.updateCar());
   };
 
   decrement = (counter) => {
     if (counter > (0 - 1)) this.setState({ counter }, () => this.updateCar());
   };
 
-  handleChangePrice = ({ target: { value } }) => {
+  handleChangeCounter = ({ target: { value } }) => {
     if (value < 100) this.setState({ counter: Number(value) }, () => this.updateCar());
-  };
-
-  sumProducts = () => {
-    const { setCarValue } = this.props;
-    setCarValue(getTotalPrice().toFixed(2));
   };
 
   render() {
     const { counter } = this.state;
     const { price, img, title, id } = this.props;
+
     const ROUTE = 'customer_products';
+
     return (
       <div>
         <span data-testid={ `${ROUTE}__element-card-price-${id}` }>
@@ -81,7 +79,7 @@ class ProductCard extends React.Component {
 
           <input
             name="counter"
-            onChange={ this.handleChangePrice }
+            onChange={ this.handleChangeCounter }
             max="99"
             min="0"
             type="number"

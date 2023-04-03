@@ -18,11 +18,17 @@ export default class OrderDetails extends React.Component {
   }
 
   removeItem(id) { // se o quantity for 0 ele remove
+    const { setCarValue } = this.props;
+
     const carProducts = getLocalStorage('carrinho', []);
     const newProducts = carProducts.filter((p) => p.id !== id);
+
     setLocalStorage('carrinho', newProducts);
+
     const total = getTotalPrice();
+
     this.setState({ carProducts: newProducts, total });
+    setCarValue(total);
   }
 
   render() {
@@ -66,7 +72,7 @@ export default class OrderDetails extends React.Component {
                 {(+product.price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </td>
               <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-sub-total-${index}` }>
-                {(+(product.price * product.quantity))
+                {Number(product.price * product.quantity)
                   .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </td>
               {customerCheckoutPath && (
@@ -98,4 +104,5 @@ OrderDetails.propTypes = {
   history: PropTypes.shape.isRequired,
   orderProducts: PropTypes.shape.isRequired,
   totalOrder: PropTypes.shape.isRequired,
+  setCarValue: PropTypes.shape.isRequired,
 };
