@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SaleCard from '../components/SaleCard';
+import SaleCard from '../components/orderCard';
 import getLocalStorage from '../services/getLocalStorage';
 import { getSalesByUserId } from '../services/requests';
 import { Header } from '../components';

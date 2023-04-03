@@ -17,8 +17,9 @@ class Login extends React.Component {
   componentDidMount() {
     const { history } = this.props;
     const user = getLocalStorage('user', 'default');
+    const rote = user.role === 'customer' ? 'products' : 'orders';
     if (user !== 'default') {
-      history.push(`/${user.role}/products`);
+      history.push(`/${user.role}/${rote}`);
     }
   }
 
