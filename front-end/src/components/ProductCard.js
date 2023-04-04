@@ -34,7 +34,6 @@ class ProductCard extends React.Component {
     }
 
     setLocalStorage('carrinho', carProducts);
-    console.log(getTotalPrice());
     setCarValue(getTotalPrice().toFixed(2));
   };
 
