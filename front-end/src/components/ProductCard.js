@@ -58,19 +58,22 @@ class ProductCard extends React.Component {
 
     return (
       <div className="product-card">
-          <img
-            className="product-img"
-            width={ 200 }
-            data-testid={ `${ROUTE}__img-card-bg-image-${id}` }
-            src={ img }
-            alt={ `${title}-img` }
-          />
-        <div className="product-card-texts">
-
-          <span data-testid={ `${ROUTE}__element-card-price-${id}` }>
+        <img
+          className="product-img"
+          width={ 200 }
+          data-testid={ `${ROUTE}__img-card-bg-image-${id}` }
+          src={ img }
+          alt={ `${title}-img` }
+        />
+        <div className="product-card-details">
+          <div className='product-title-price'>
+            <div className='product-title-div'>
+              <span data-testid={ `${ROUTE}__element-card-title-${id}` }>{title}</span>
+            </div>
+          <span className="product-price" data-testid={ `${ROUTE}__element-card-price-${id}` }>R$:
             {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
           </span>
-          <span data-testid={ `${ROUTE}__element-card-title-${id}` }>{title}</span>
+          </div>
           <div>
             <button
               data-testid={ `customer_products__button-card-rm-item-${id}` }
@@ -97,7 +100,7 @@ class ProductCard extends React.Component {
             >
               +
             </button>
-          </div>
+            </div>
         </div>
       </div>
     );

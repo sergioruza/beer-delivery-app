@@ -5,18 +5,54 @@ body {
 .card-order {
   display: flex;
   flex-direction: column;
-  border: solid black 1px
+  border: solid #D5D9D9 1px;
+  color: black;
+  margin: 5%;
+  text-align: center;
+  border-radius: 15px;
+  height: 20vh;
+  justify-content: center;
+  background-color: #E6E6E6;
+}
+
+.card-order:hover {
+  transition: 100ms;
 }
 
 .orders-all-cards {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 80vh;
+  width: 90vw;
+  margin-left: 5vw;
+  font-size: 125%;
+  align-content: space-around;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: x-large;
+
+
 }
 
 .order-placed {
   display: flex;
   flex-direction: row;
-  align-item
+  align-items: center;
+  margin: 0 auto;
+}
+
+.order-placed span {
+  margin-left: 6px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.primary-information {
+  background-color: #a8a8a8;
+  border-radius: 6px;
+}
+
+.primary-information span {
+  margin-left: 6px;
 }

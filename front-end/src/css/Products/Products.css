@@ -1,0 +1,8 @@
+.all-products-div {
+  margin-left: 15vw;
+  width: 70vw;
+  display: flex;
+  flex-basis: 70%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}

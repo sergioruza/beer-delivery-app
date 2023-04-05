@@ -4,6 +4,7 @@ import { Header } from '../components';
 import ProductCard from '../components/ProductCard';
 import { AppConsumer } from '../context/appContext';
 import getTotalPrice from '../utils/getTotalPrice';
+import '../css/Products/Products.css';
 
 export default class Products extends Component {
   render() {
@@ -26,7 +27,7 @@ export default class Products extends Component {
                 </span>
               </div>
             </button>
-            <section>
+            <div className="all-products-div">
               {listProducts?.map(({ price, urlImage, name, id }) => (
                 <ProductCard
                   setCarValue={ setCarValue }
@@ -37,7 +38,7 @@ export default class Products extends Component {
                   id={ id }
                 />
               )) }
-            </section>
+            </div>
           </div>
         )}
       </AppConsumer>

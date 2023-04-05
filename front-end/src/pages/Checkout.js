@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Button } from '@mui/material';
 import React, { Component } from 'react';
 import { Header, OrderDetails } from '../components';
 import { createSale } from '../services/requests';
@@ -83,14 +84,16 @@ export default class Checkout extends Component {
                   />
                 </div>
               </div>
-              <button
+              <Button
+                variant="contained"
+                color="success"
                 type="submit"
                 name="finishOrder"
                 onClick={ () => this.createNewSale(setCarValue) }
                 data-testid="customer_checkout__button-submit-order"
               >
                 FINALIZAR PEDIDO
-              </button>
+              </Button>
             </section>
           </div>
         )}

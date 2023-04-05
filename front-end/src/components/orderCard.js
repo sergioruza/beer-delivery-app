@@ -16,25 +16,28 @@ export default class SaleCard extends React.Component {
     return (
       <div>
         <Link className="card-order" to={ href }>
-          <div>
-            Pedido:
-            <span data-testid={ `${ROUTE}order-id-${id}` }>
-              {id.toString().padStart(FOUR, '0')}
+          <div className="primary-information">
+            <div>
+              Pedido:
+              <span data-testid={ `${ROUTE}order-id-${id}` }>
+                {id.toString().padStart(FOUR, '0')}
+              </span>
+            </div>
+            <span data-testid={ `${ROUTE}delivery-status-${id}` }>
+              {`Status: ${status}`}
             </span>
           </div>
-          <span data-testid={ `${ROUTE}delivery-status-${id}` }>
-            {status}
-          </span>
           <div className="order-placed">
-            <p>Pedido realizado em: </p>
+            <p>Pedido realizado em:</p>
             <span data-testid={ `${ROUTE}order-date-${id}` }>
               {formatedDate}
             </span>
           </div>
           <div>
-            R$:
+
             <span data-testid={ `${ROUTE}card-price-${id}` }>
-              {Number(totalPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+              {`Total: R$ ${Number(totalPrice)
+                .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
             </span>
           </div>
           {
