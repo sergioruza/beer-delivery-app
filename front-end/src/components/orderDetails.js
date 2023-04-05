@@ -62,11 +62,36 @@ export default class OrderDetails extends React.Component {
         <TableContainer component={ Paper }>
           <Table>
             <TableHead>
-              <TableCell sx={{ textAlign: 'center'}} component="th">Item</TableCell>
-              <TableCell sx={{ textAlign: 'center'}} component="th">Descrição</TableCell>
-              <TableCell sx={{ textAlign: 'center'}} component="th">Quantidade</TableCell>
-              <TableCell sx={{ textAlign: 'center'}} component="th">Valor Unitário</TableCell>
-              <TableCell sx={{ textAlign: 'center'}} component="th">Sub-total</TableCell>
+              <TableCell
+                sx={ { textAlign: 'center' } }
+                component="th"
+              >
+                Item
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center' } }
+                component="th"
+              >
+                Descrição
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center' } }
+                component="th"
+              >
+                Quantidade
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center' } }
+                component="th"
+              >
+                Valor Unitário
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center' } }
+                component="th"
+              >
+                Sub-total
+              </TableCell>
               {customerCheckoutPath && <TableCell component="th">Remover Item</TableCell>}
             </TableHead>
             <TableBody>
@@ -74,35 +99,42 @@ export default class OrderDetails extends React.Component {
                 <TableRow key={ index } sx={ { textAlign: 'center' } }>
                   <TableCell
                     sx={ { textAlign: 'center' } }
-                    data-testid={ `${COSTUMER}${ELEMENTORDER}-table-item-number-${index}` }
+                    data-testid={
+                      `${COSTUMER}${ELEMENTORDER}-table-item-number-${index}`
+                    }
                   >
                     {index + 1}
                   </TableCell>
                   <TableCell
-                    sx={{ textAlign: 'center'}}
-                    data-testid={ `${COSTUMER}${ELEMENTORDER}-table-name-${index}` }>
+                    sx={ { textAlign: 'center' } }
+                    data-testid={ `${COSTUMER}${ELEMENTORDER}-table-name-${index}` }
+                  >
                     {product.title}
                   </TableCell>
                   <TableCell
-                    sx={{ textAlign: 'center'}}
-                    data-testid={ `${COSTUMER}${ELEMENTORDER}-table-quantity-${index}` }>
+                    sx={ { textAlign: 'center' } }
+                    data-testid={ `${COSTUMER}${ELEMENTORDER}-table-quantity-${index}` }
+                  >
                     {product.quantity}
                   </TableCell>
                   <TableCell
-                    sx={{ textAlign: 'center'}}
+                    sx={ { textAlign: 'center' } }
                     data-testid={ `${COSTUMER}${ELEMENTORDER}-table-unit-price-${index}` }
                   >
-                    {(+product.price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    { (+product.price)
+                      .toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
                   </TableCell>
                   <TableCell
-                    sx={{ textAlign: 'center'}}
+                    sx={ { textAlign: 'center' } }
                     data-testid={ `${COSTUMER}${ELEMENTORDER}-table-sub-total-${index}` }
                   >
                     {Number(product.price * product.quantity)
                       .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                   </TableCell>
                   {customerCheckoutPath && (
-                    <TableCell data-testid={ `${COSTUMER}${ELEMENTORDER}-table-remove-${index}` }>
+                    <TableCell
+                      data-testid={ `${COSTUMER}${ELEMENTORDER}-table-remove-${index}` }
+                    >
                       <Button
                         startIcon={ <DeleteIcon /> }
                         variant="contained"

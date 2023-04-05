@@ -47,6 +47,7 @@ export default class SaleCard extends React.Component {
               </span>
             )
           }
+          <p className="text-details">Detalhes</p>
         </Link>
       </div>
     );
