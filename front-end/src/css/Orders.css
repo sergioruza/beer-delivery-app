@@ -1,0 +1,14 @@
+body {
+  background-color: #8c8c8c;
+}
+
+.card-order {
+  display: flex;
+  flex-direction: column;
+}
+
+.orders-all-cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

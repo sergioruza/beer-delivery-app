@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { TableHead, TableRow } from '@mui/material';
+import { Table, TableHead, TableRow, Button } from '@mui/material';
+//  import { DeleteIcon } from '@mui/icons-material';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
 import getTotalPrice from '../utils/getTotalPrice';
@@ -49,7 +50,7 @@ export default class OrderDetails extends React.Component {
 
     return (
       <div>
-        <table>
+        <Table>
           <TableHead>
             <th>Item</th>
             <th>Descrição</th>
@@ -78,17 +79,20 @@ export default class OrderDetails extends React.Component {
               </td>
               {customerCheckoutPath && (
                 <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-remove-${index}` }>
-                  <button
+                  <Button
+                    //  startIcon={ <DeleteIcon /> }
+                    variant="contained"
+                    color="error"
                     type="button"
                     onClick={ () => this.removeItem(product.id) }
                   >
                     Remover
-                  </button>
+                  </Button>
                 </td>
               )}
             </TableRow>
           ))}
-        </table>
+        </Table>
         <div>
           Total: R$
           <span data-testid={ `${COSTUMER}${ELEMENTORDER}-total-price` }>

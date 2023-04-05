@@ -3,6 +3,7 @@ import React from 'react';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
 import getTotalPrice from '../utils/getTotalPrice';
+import '../css/Products/ProductCard.css';
 
 class ProductCard extends React.Component {
   state = {
@@ -56,7 +57,7 @@ class ProductCard extends React.Component {
     const ROUTE = 'customer_products';
 
     return (
-      <div>
+      <div className="product-card">
         <span data-testid={ `${ROUTE}__element-card-price-${id}` }>
           {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
         </span>

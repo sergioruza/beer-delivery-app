@@ -15,7 +15,7 @@ export default class SaleCard extends React.Component {
     const FOUR = 4;
     return (
       <div>
-        <Link to={ href }>
+        <Link className="card-order" to={ href }>
           <div>
             Pedido:
             <span data-testid={ `${ROUTE}order-id-${id}` }>
