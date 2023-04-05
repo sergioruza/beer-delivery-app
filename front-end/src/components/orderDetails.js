@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { TableHead, TableRow } from '@mui/material';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
 import getTotalPrice from '../utils/getTotalPrice';
@@ -49,16 +50,16 @@ export default class OrderDetails extends React.Component {
     return (
       <div>
         <table>
-          <tr>
+          <TableHead>
             <th>Item</th>
             <th>Descrição</th>
             <th>Quantidade</th>
             <th>Valor Unitário</th>
             <th>Sub-total</th>
             {customerCheckoutPath && <th>Remover Item</th>}
-          </tr>
+          </TableHead>
           {carProducts?.map((product, index) => (
-            <tr key={ index }>
+            <TableRow key={ index }>
               <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-item-number-${index}` }>
                 {index + 1}
               </td>
@@ -85,7 +86,7 @@ export default class OrderDetails extends React.Component {
                   </button>
                 </td>
               )}
-            </tr>
+            </TableRow>
           ))}
         </table>
         <div>

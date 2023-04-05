@@ -52,3 +52,20 @@
     transform: rotate(-10deg);
   }
 } */
+
+@font-face {
+  font-family: myFont;
+  src: url('./Fonts/pink.otf');
+}
+
+@font-face {
+  font-family: titleFont;
+  src: url('./Fonts/pinkbold.otf');
+}
+
+@font-face {
+  font-family: subTitle;
+  src: url('./Fonts/pinkSub.otf');
+}
+
+

@@ -1,17 +1,38 @@
 body {
   background-color: #8c8c8c;
 }
+:root {
+  --mainColor: #002c58;
+}
+.register-div {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.register-title {
+  font-family: titleFont;
+  color: var(--mainColor);
+}
+
+.logo-img {
+  width: 70%;
+  min-width: 250px;
+}
 
 .all-register {
   align-items: center;
   border: solid 1px black;
+  background-color: #e6e6e6;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  height: 80vh;
   justify-content: space-evenly;
-  margin-left: 4.5vw;
-  margin-top: 10vh;
+  max-height: 800px;
+  max-width: 550px;
+  height: 90vh;
   width: 90vw;
 }
 
@@ -21,18 +42,59 @@ body {
 }
 
 .btn-register {
-  align-items: center;
+  height: 40px;
+  padding: 10px 30px 10px 30px;
+  font-family: titleFont;
+  font-size: 14px;
+  color: white;
   border-radius: 10px;
-  display: flex;
-  height: 50px;
+  border: none;
+  background-color: var(--mainColor);
+  transition: 150ms ease-in-out;
 }
 
-.msg-register-div {
+.btn-register:disabled {
+  opacity: 0.5;
+}
+
+.btn-register:not([disabled]):hover {
+  transform: scale(1.03);
+}
+
+.message-register-div {
   height: 50px;
+  display: flex;
+  align-items: center;
   text-align: center;
+  justify-content: center;
   width: 70%;
 }
 
 .msg-register {
+  font-family: subTitle;
   text-align: center;
+}
+
+@media(max-height: 700px) {
+  .logo-img {
+    max-width: 200px
+  }
+  .register-title {
+    font-size: 25px;
+  }
+}
+
+@media(max-width: 350px) {
+  .message-register-div {
+    width: 90%;
+  }
+  .all-register {
+    border: none;
+    border-radius: 0px;
+    height: 100vh;
+    width: 100vw;
+  }
+  .register-title {
+    font-size: 25px;
+  }
 }

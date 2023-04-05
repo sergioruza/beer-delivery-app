@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { loginAPI } from '../services/requests';
@@ -46,68 +45,69 @@ class Register extends React.Component {
       showMsg, disableLoginBtn } = this.state;
 
     return (
-      <div className="all-register">
-        <h1>Cadastre-se</h1>
-        <img width={ 200 } src={ logo } alt="logo" />
-        <Box
-          className="inputs-register"
-          component="form"
-          sx={ {
-            '& > :not(style)': { m: 1, width: '25ch' },
-          } }
-          autoComplete="off"
-        >
+      <div className="register-div">
+        <div className="all-register">
+          <img className="logo-img" src={ logo } alt="logo" />
+          <h1 className="register-title">Cadastre-se</h1>
+          <Box
+            className="inputs-register"
+            component="form"
+            sx={ {
+              '& > :not(style)': { m: 1, width: '25ch' },
+            } }
+            autoComplete="off"
+          >
 
-          <TextField
-            type="text"
-            name="name"
-            value={ name }
-            placeholder="nome"
-            onChange={ this.handleChange }
-            data-testid="common_register__input-name"
-          />
-          <TextField
-            type="email"
-            name="email"
-            required
-            value={ email }
-            placeholder="email"
-            onChange={ this.handleChange }
-            data-testid="common_register__input-email"
-          />
-          <TextField
-            type="password"
-            name="password"
-            placeholder="senha"
-            value={ password }
-            onChange={ this.handleChange }
-            data-testid="common_register__input-password"
-          />
-        </Box>
-        <Button
-          className="btn-register"
-          variant="contained"
-          type="submit"
-          value="Cadastrar"
-          disabled={ disableLoginBtn }
-          onClick={ this.handleRegister }
-          data-testid="common_register__button-register"
-        >
-          Cadastrar
+            <TextField
+              type="text"
+              name="name"
+              value={ name }
+              placeholder="nome"
+              onChange={ this.handleChange }
+              data-testid="common_register__input-name"
+            />
+            <TextField
+              type="email"
+              name="email"
+              required
+              value={ email }
+              placeholder="email"
+              onChange={ this.handleChange }
+              data-testid="common_register__input-email"
+            />
+            <TextField
+              type="password"
+              name="password"
+              placeholder="senha"
+              value={ password }
+              onChange={ this.handleChange }
+              data-testid="common_register__input-password"
+            />
+          </Box>
+          <button
+            className="btn-register"
+            type="submit"
+            value="Cadastrar"
+            disabled={ disableLoginBtn }
+            onClick={ this.handleRegister }
+            data-testid="common_register__button-register"
+          >
+            Cadastrar
 
-        </Button>
-        <div className="msg-register-div">
+          </button>
+          <div className="message-register-div">
 
-          {
-            showMsg && (
-              <span
-                className="msg-register"
-                data-testid="common_register__element-invalid_register"
-              >
-                {message}
-              </span>
-            )
-          }
+            {
+              showMsg && (
+                <span
+                  className="msg-register"
+                  data-testid="common_register__element-invalid_register"
+                >
+                  {message}
+                </span>
+              )
+            }
+          </div>
         </div>
       </div>
     );
