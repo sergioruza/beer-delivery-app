@@ -9,6 +9,7 @@ import {
   TableCell,
   Button,
   Paper,
+  Container,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import getLocalStorage from '../services/getLocalStorage';
@@ -58,7 +59,7 @@ export default class OrderDetails extends React.Component {
     const customerCheckoutPath = pathName[1] === 'customer' && pathName[2] === 'checkout';
 
     return (
-      <div>
+      <Container>
         <TableContainer component={ Paper }>
           <Table>
             <TableHead>
@@ -158,7 +159,7 @@ export default class OrderDetails extends React.Component {
           </span>
         </div>
 
-      </div>
+      </Container>
     );
   }
 }
