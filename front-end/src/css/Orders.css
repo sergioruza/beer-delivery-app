@@ -5,10 +5,18 @@ body {
 .card-order {
   display: flex;
   flex-direction: column;
+  border: solid black 1px
 }
 
 .orders-all-cards {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 80vh;
+}
+
+.order-placed {
+  display: flex;
+  flex-direction: row;
+  align-item
 }

@@ -25,7 +25,8 @@ export default class SaleCard extends React.Component {
           <span data-testid={ `${ROUTE}delivery-status-${id}` }>
             {status}
           </span>
-          <div>
+          <div className="order-placed">
+            <p>Pedido realizado em: </p>
             <span data-testid={ `${ROUTE}order-date-${id}` }>
               {formatedDate}
             </span>

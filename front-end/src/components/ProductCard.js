@@ -58,42 +58,46 @@ class ProductCard extends React.Component {
 
     return (
       <div className="product-card">
-        <span data-testid={ `${ROUTE}__element-card-price-${id}` }>
-          {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-        </span>
-        <img
-          width={ 200 }
-          data-testid={ `${ROUTE}__img-card-bg-image-${id}` }
-          src={ img }
-          alt={ `${title}-img` }
-        />
-        <span data-testid={ `${ROUTE}__element-card-title-${id}` }>{title}</span>
-        <div>
-          <button
-            data-testid={ `customer_products__button-card-rm-item-${id}` }
-            onClick={ () => this.decrement(counter - 1) }
-            type="button"
-          >
-            -
-          </button>
-
-          <input
-            name="counter"
-            onChange={ this.handleChangeCounter }
-            max="99"
-            min="0"
-            type="number"
-            data-testid={ `customer_products__input-card-quantity-${id}` }
-            value={ counter }
+          <img
+            className="product-img"
+            width={ 200 }
+            data-testid={ `${ROUTE}__img-card-bg-image-${id}` }
+            src={ img }
+            alt={ `${title}-img` }
           />
+        <div className="product-card-texts">
 
-          <button
-            data-testid={ `customer_products__button-card-add-item-${id}` }
-            onClick={ () => this.increment(counter + 1) }
-            type="button"
-          >
-            +
-          </button>
+          <span data-testid={ `${ROUTE}__element-card-price-${id}` }>
+            {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </span>
+          <span data-testid={ `${ROUTE}__element-card-title-${id}` }>{title}</span>
+          <div>
+            <button
+              data-testid={ `customer_products__button-card-rm-item-${id}` }
+              onClick={ () => this.decrement(counter - 1) }
+              type="button"
+            >
+              -
+            </button>
+
+            <input
+              name="counter"
+              onChange={ this.handleChangeCounter }
+              max="99"
+              min="0"
+              type="number"
+              data-testid={ `customer_products__input-card-quantity-${id}` }
+              value={ counter }
+            />
+
+            <button
+              data-testid={ `customer_products__button-card-add-item-${id}` }
+              onClick={ () => this.increment(counter + 1) }
+              type="button"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
     );
