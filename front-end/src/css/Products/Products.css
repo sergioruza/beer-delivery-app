@@ -47,3 +47,9 @@
     justify-content: space-evenly;
   }
 }
+
+@media(max-width: 500px) {
+  .go-to-car-btn-div {
+    font-size: 16px;
+  }
+}

@@ -8,50 +8,64 @@ import '../css/Header.css';
 class Header extends Component {
   render() {
     const { history } = this.props;
-    const type = history.location.pathname.split('/')[1];
+    const actualRoute = history.location.pathname.split('/');
     const { name } = getLocalStorage('user', { name: 'Matheus' });
+    const ROLETYPE = getOrderType(actualRoute[1]);
 
+    //  data-test-ids
     const ROUTE = 'customer_products';
     const PRODUCTS = 'element-navbar-link-products';
     const ORDERS = 'element-navbar-link-orders';
     const LOGOUT = 'element-navbar-link-logout';
     const FULLNAME = 'element-navbar-user-full-name';
-    const ROLETYPE = getOrderType(type);
+    //
+
     return (
       <div className="header-div">
-        {
-          type === 'customer' && (
-            <button
-              type="button"
-              onClick={ () => history.push(`/${type}/products`) }
-              data-testid={ `${ROUTE}__${PRODUCTS}` }
+        <div className="main-btns-div">
+          {
+            actualRoute[1] === 'customer' && (
+              <button
+                className="header-btn"
+                type="button"
+                disabled={ actualRoute[2] === 'products' }
+                onClick={ () => history.push(`/${actualRoute[1]}/products`) }
+                data-testid={ `${ROUTE}__${PRODUCTS}` }
+              >
+                Produtos
+              </button>
+
+            )
+          }
+          <button
+            className="header-btn"
+            type="button"
+            disabled={ history.location.pathname === `/${actualRoute[1]}/orders`
+            || actualRoute[1] === 'admin' }
+            onClick={ () => history.push(`/${actualRoute[1]}/orders`) }
+            data-testid={ `${ROUTE}__${ORDERS}` }
+          >
+            { ROLETYPE }
+          </button>
+        </div>
+        <div className="logout-name-div">
+          <div className="username-div">
+            <span
+              data-testid={ `${ROUTE}__${FULLNAME}` }
             >
-              Produtos
-            </button>
+              { name }
+            </span>
+          </div>
 
-          )
-        }
-        <button
-          type="button"
-          onClick={ () => history.push(`/${type}/orders`) }
-          data-testid={ `${ROUTE}__${ORDERS}` }
-        >
-          { ROLETYPE }
-        </button>
-
-        <span
-          data-testid={ `${ROUTE}__${FULLNAME}` }
-        >
-          { name }
-        </span>
-
-        <button
-          type="button"
-          data-testid={ `${ROUTE}__${LOGOUT}` }
-          onClick={ () => logout(history) }
-        >
-          Sair
-        </button>
+          <button
+            className="logout-btn"
+            type="button"
+            data-testid={ `${ROUTE}__${LOGOUT}` }
+            onClick={ () => logout(history) }
+          >
+            Sair
+          </button>
+        </div>
       </div>
     );
   }

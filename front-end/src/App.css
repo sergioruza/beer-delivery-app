@@ -68,4 +68,20 @@
   src: url('./Fonts/pinkSub.otf');
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #002c58;
+  transition: 150ms ease-in-out;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to bottom, #FE5C02, #fe7b34);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(to bottom, #fe6a1b, #fe8b4d);
+  border-radius: 10px;
+}
+
 
