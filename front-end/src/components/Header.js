@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import getOrderType from '../utils/getOrderType';
 import getLocalStorage from '../services/getLocalStorage';
 import logout from '../utils/logout';
+import '../css/Header.css';
 
 class Header extends Component {
   render() {
@@ -17,7 +18,7 @@ class Header extends Component {
     const FULLNAME = 'element-navbar-user-full-name';
     const ROLETYPE = getOrderType(type);
     return (
-      <div>
+      <div className="header-div">
         {
           type === 'customer' && (
             <button

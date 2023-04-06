@@ -65,27 +65,29 @@ class ProductCard extends React.Component {
           src={ img }
           alt={ `${title}-img` }
         />
-        <div className="product-card-details">
-          <div className='product-title-price'>
-            <div className='product-title-div'>
-              <span data-testid={ `${ROUTE}__element-card-title-${id}` }>{title}</span>
-            </div>
-          <span className="product-price" data-testid={ `${ROUTE}__element-card-price-${id}` }>R$:
-            {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+        <div className="product-title-div">
+          <span
+            className="product-title"
+            data-testid={ `${ROUTE}__element-card-title-${id}` }
+          >
+            {title}
+
           </span>
-          </div>
-          <div>
+        </div>
+        <div className="quantity-price-div">
+          <div className="buttons-div">
             <button
+              className="product-btn"
               data-testid={ `customer_products__button-card-rm-item-${id}` }
               onClick={ () => this.decrement(counter - 1) }
               type="button"
             >
               -
             </button>
-
             <input
               name="counter"
               onChange={ this.handleChangeCounter }
+              className="product-input"
               max="99"
               min="0"
               type="number"
@@ -94,13 +96,22 @@ class ProductCard extends React.Component {
             />
 
             <button
+              className="product-btn"
               data-testid={ `customer_products__button-card-add-item-${id}` }
               onClick={ () => this.increment(counter + 1) }
               type="button"
             >
               +
             </button>
-            </div>
+          </div>
+          <span
+            className="product-price"
+            data-testid={ `${ROUTE}__element-card-price-${id}` }
+          >
+            R$
+            {' '}
+            {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </span>
         </div>
       </div>
     );

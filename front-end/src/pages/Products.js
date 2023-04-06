@@ -15,12 +15,13 @@ export default class Products extends Component {
           <div>
             <Header history={ history } />
             <button
+              className="go-to-car-btn"
               data-testid="customer_products__button-cart"
               onClick={ () => history.push('/customer/checkout') }
               disabled={ Number(getTotalPrice().toFixed(2)) === 0 }
               type="button"
             >
-              <div>
+              <div className="go-to-car-btn-div">
                 Ver Carrinho: R$
                 <span data-testid="customer_products__checkout-bottom-value">
                   {Number(carValue).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
