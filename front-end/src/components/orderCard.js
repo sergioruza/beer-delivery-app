@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import getClassNameForStatus from '../utils/getClassNameForStatus';
 
 export default class SaleCard extends React.Component {
   render() {
@@ -16,38 +17,35 @@ export default class SaleCard extends React.Component {
     return (
       <div>
         <Link className="card-order" to={ href }>
-          <div className="primary-information">
-            <div>
-              Pedido:
-              <span data-testid={ `${ROUTE}order-id-${id}` }>
-                {id.toString().padStart(FOUR, '0')}
-              </span>
-            </div>
+          <div className="id-div">
+            Pedido:
+            <span data-testid={ `${ROUTE}order-id-${id}` }>
+              {id.toString().padStart(FOUR, '0')}
+            </span>
+          </div>
+          <div className={ getClassNameForStatus(status) }>
             <span data-testid={ `${ROUTE}delivery-status-${id}` }>
-              {`Status: ${status}`}
+              {status}
             </span>
           </div>
-          <div className="order-placed">
-            <p>Pedido realizado em:</p>
-            <span data-testid={ `${ROUTE}order-date-${id}` }>
-              {formatedDate}
-            </span>
-          </div>
-          <div>
+          <div className="order-details">
+            <text data-testid={ `${ROUTE}order-date-${id}` }>
+              {`Realizado em: ${formatedDate}`}
+            </text>
 
-            <span data-testid={ `${ROUTE}card-price-${id}` }>
+            <text data-testid={ `${ROUTE}card-price-${id}` }>
               {`Total: R$ ${Number(totalPrice)
                 .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
-            </span>
+            </text>
+
+            {
+              userType === 'seller' && (
+                <span data-testid={ `${ROUTE}card-address-${id}` }>
+                  {deliveryAddress}
+                </span>
+              )
+            }
           </div>
-          {
-            userType === 'seller' && (
-              <span data-testid={ `${ROUTE}card-address-${id}` }>
-                {deliveryAddress}
-              </span>
-            )
-          }
-          <p className="text-details">Detalhes</p>
         </Link>
       </div>
     );
