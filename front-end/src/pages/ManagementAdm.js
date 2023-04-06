@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import usersMock from '../utils/mocks/usersMock';
 import TableUsers from '../components/tableUsers';
 import validateFields from '../utils/validateFields';
 import Header from '../components/Header';
-import { createUserAdm } from '../services/requests';
+import { createUserAdm, getUsers } from '../services/requests';
 import getLocalStorage from '../services/getLocalStorage';
 
 export default class ManagementAdm extends Component {
@@ -16,12 +15,24 @@ export default class ManagementAdm extends Component {
     inputName: '',
     inputEmail: '',
     invalidRegister: false,
+    users: [],
+    loading: false,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const user = getLocalStorage('user', []);
     this.setState({ user });
+    await this.fetchUsers();
   }
+
+  fetchUsers = async () => {
+    const users = await getUsers();
+    if (users.error) {
+      return this.setState({ errorMsg: users.error });
+    }
+    const filterAdm = users.filter((e) => e.role !== 'administrator');
+    this.setState({ users: filterAdm, loading: true });
+  };
 
   validate = () => {
     const { inputName, inputEmail, inputPass } = this.state;
@@ -65,7 +76,7 @@ export default class ManagementAdm extends Component {
   render() {
     const ADMIN_MANAGE = 'admin_manage__';
     const { inputName, inputEmail, inputPass, roleSelect, msg, btnDisable,
-      invalidRegister } = this.state;
+      invalidRegister, users, errorMsg, loading } = this.state;
     const { history } = this.props;
     return (
       <div>
@@ -146,8 +157,9 @@ export default class ManagementAdm extends Component {
           </div>
 
           <div>
-
-            <TableUsers users={ usersMock } />
+            {
+              loading && <TableUsers errorMsg={ errorMsg } users={ users } />
+            }
 
           </div>
         </div>

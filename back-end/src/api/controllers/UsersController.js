@@ -15,6 +15,16 @@ class UsersControllers {
 
     return this.res.status(201).json(users);
   }
+
+  async deleteUser() {
+    const { id } = this.req.params;
+    const deleteUser = await this.service.deleteUser(+id);
+    if (deleteUser.error) {
+      return this.res.status(deleteUser.status).json({ error: deleteUser.error });
+    }
+
+    return this.res.status(204).send('ok');
+  }
 }
 
 module.exports = UsersControllers;

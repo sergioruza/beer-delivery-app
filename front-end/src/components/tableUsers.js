@@ -1,36 +1,31 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { getUsers, deleteUsers } from '../services/requests';
+import { deleteUsers } from '../services/requests';
 
 export default class TableUsers extends Component {
   state = {
-    users: [],
     errorMsg: '',
+    usersState: [],
   };
 
   async componentDidMount() {
-    await this.fetchUsers();
+    const { errorMsg, users } = this.props;
+    this.setState({ errorMsg, usersState: users });
   }
-
-  fetchUsers = async () => {
-    const users = await getUsers();
-    if (users.error) {
-      return this.setState({ errorMsg: users.error });
-    }
-    this.setState({ users });
-  };
 
   deleteUserReq = async (id) => {
     const deleteUser = await deleteUsers(id);
     if (deleteUsers.error) {
       return this.setState({ errorMsg: deleteUser.erro });
     }
-    this.setState({ errorMsg: deleteUser });
+    const { usersState } = this.state;
+    const deletePage = usersState.filter((user) => user.id !== id);
+    this.setState({ errorMsg: deleteUser, usersState: deletePage });
   };
 
   render() {
-    // const { users } = this.props;
-    const { users, errorMsg } = this.state;
+    const { errorMsg, usersState } = this.state;
+    const { users } = this.props;
     const ADMIN_MANAGE__ELEMENT = 'admin_manage__element';
     let counter = 0;
     return (
@@ -46,55 +41,55 @@ export default class TableUsers extends Component {
           </tr>
 
           {
-            errorMsg !== '' ? <h2>{ errorMsg }</h2> : (
-              users.map((user, index) => {
-                counter += 1;
-                return (
-                  <tr key={ user.name }>
-                    <td
-                      data-testid={ `${ADMIN_MANAGE__ELEMENT
-                      }-user-table-item-number-${index}` }
+
+            usersState.map((user, index) => {
+              counter += 1;
+              return (
+                <tr key={ user.name }>
+                  <td
+                    data-testid={ `${ADMIN_MANAGE__ELEMENT
+                    }-user-table-item-number-${index}` }
+                  >
+                    {counter}
+
+                  </td>
+                  <td
+                    data-testid={
+                      `${ADMIN_MANAGE__ELEMENT}-user-table-name-${index}`
+                    }
+                  >
+                    {user.name}
+
+                  </td>
+                  <td
+                    data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-email-${index}` }
+                  >
+                    {user.email}
+
+                  </td>
+                  <td
+                    data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-role-${index}` }
+                  >
+                    {user.role}
+
+                  </td>
+                  <td
+                    data-testid={
+                      `admin_manage__element-user-table-remove-user-table-remove-${index}`
+                    }
+                  >
+                    <button
+                      onClick={ async () => this.deleteUserReq(user.id) }
+                      type="button"
                     >
-                      {counter}
+                      Excluir
 
-                    </td>
-                    <td
-                      data-testid={
-                        `${ADMIN_MANAGE__ELEMENT}-user-table-name-${index}`
-                      }
-                    >
-                      {user.name}
+                    </button>
 
-                    </td>
-                    <td
-                      data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-email-${index}` }
-                    >
-                      {user.email}
-
-                    </td>
-                    <td
-                      data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-role-${index}` }
-                    >
-                      {user.role}
-
-                    </td>
-                    <td
-                      data-testid={
-                        `${ADMIN_MANAGE__ELEMENT}-user-table-remove-${index}`
-                      }
-                    >
-                      <button
-                        onClick={ () => this.deleteUserReq(user.id) }
-                        type="button"
-                      >
-                        Excluir
-
-                      </button>
-
-                    </td>
-                  </tr>
-                );
-              }))
+                  </td>
+                </tr>
+              );
+            })
           }
 
         </table>
