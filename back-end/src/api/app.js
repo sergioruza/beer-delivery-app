@@ -16,6 +16,7 @@ app.use('/login', routes.loginRoute);
 app.use('/register', routes.registerRoute);
 app.use('/products', routes.productsRoute);
 app.use('/orders', routes.ordersRoute);
+app.use('/users', routes.usersRoute);
 
 // app.use(ErrorHandler.handle);
 
