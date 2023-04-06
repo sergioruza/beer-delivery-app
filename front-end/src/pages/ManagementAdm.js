@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import NavBarAdm from '../components/NavBarAdm';
+import usersMock from '../utils/mocks/usersMock';
+import TableUsers from '../components/tableUsers';
 
 export default class ManagementAdm extends Component {
   render() {
@@ -49,6 +51,12 @@ export default class ManagementAdm extends Component {
               Cadastrar
 
             </button>
+          </div>
+
+          <div>
+
+            <TableUsers users={ usersMock } />
+
           </div>
         </div>
 
