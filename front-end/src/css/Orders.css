@@ -8,8 +8,8 @@ body {
   border: solid #727171 2px;
   align-items: center;
   color: black;
-  margin: 5%;
-  width:300px;
+  margin: 10px;
+  width: 300px;
   text-align: center;
   border-radius: 15px;
   height: 26vh;
@@ -23,6 +23,7 @@ body {
   display: flex;
   flex-basis: 70%;
   flex-wrap: wrap;
+  border: solid black 1px;
   justify-content: space-evenly;
   width: 90vw;
   margin-left: 5vw;
