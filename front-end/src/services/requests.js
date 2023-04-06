@@ -48,3 +48,8 @@ export const createUserAdm = async (endpoint, body, token) => {
   return data;
 };
 export default api;
+
+export const getUsers = async () => {
+  const { data } = await api.get('/users').catch((e) => e.response);
+  return data;
+};

@@ -64,7 +64,8 @@ export default class ManagementAdm extends Component {
 
   render() {
     const ADMIN_MANAGE = 'admin_manage__';
-    const { inputName, inputEmail, inputPass, roleSelect, msg, btnDisable, invalidRegister } = this.state;
+    const { inputName, inputEmail, inputPass, roleSelect, msg, btnDisable,
+      invalidRegister } = this.state;
     const { history } = this.props;
     return (
       <div>

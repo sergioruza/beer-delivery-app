@@ -1,9 +1,29 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { getUsers } from '../services/requests';
 
 export default class TableUsers extends Component {
+  state = {
+    users: [],
+    errorMsg: '',
+  };
+
+  async componentDidMount() {
+    await this.fetchUsers();
+  }
+
+  fetchUsers = async () => {
+    const users = await getUsers();
+    if (users.error) {
+      return this.setState({ errorMsg: users.error });
+    }
+    this.setState({ users });
+  };
+
   render() {
-    const { users } = this.props;
+    // const { users } = this.props;
+    const { users, errorMsg } = this.state;
+    console.log(users);
     const ADMIN_MANAGE = 'admin_manage__';
     const ADMIN_MANAGE__ELEMENT = 'admin_manage__element';
     let counter = 0;
@@ -20,42 +40,49 @@ export default class TableUsers extends Component {
           </tr>
 
           {
-            users.map((user, index) => {
-              counter += 1;
-              return (
-                <tr key={ user.name }>
-                  <td
-                    data-testid={ `${ADMIN_MANAGE__ELEMENT
-                    }-user-table-item-number-${index}` }
-                  >
-                    {counter}
+            errorMsg !== '' ? <h2>{ errorMsg }</h2> : (
+              users.map((user, index) => {
+                counter += 1;
+                return (
+                  <tr key={ user.name }>
+                    <td
+                      data-testid={ `${ADMIN_MANAGE__ELEMENT
+                      }-user-table-item-number-${index}` }
+                    >
+                      {counter}
 
-                  </td>
-                  <td data-testid={ `$${ADMIN_MANAGE}input-email` }>
-                    {user.name}
+                    </td>
+                    <td
+                      data-testid={
+                        `${ADMIN_MANAGE__ELEMENT}-user-table-name-${index}`
+                      }
+                    >
+                      {user.name}
 
-                  </td>
-                  <td
-                    data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-email-${index}` }
-                  >
-                    {user.email}
+                    </td>
+                    <td
+                      data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-email-${index}` }
+                    >
+                      {user.email}
 
-                  </td>
-                  <td
-                    data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-role-${index}` }
-                  >
-                    {user.role}
+                    </td>
+                    <td
+                      data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-role-${index}` }
+                    >
+                      {user.role}
 
-                  </td>
-                  <td
-                    data-testid={ `${ADMIN_MANAGE__ELEMENT}-user-table-remove-${index}` }
-                  >
-                    <button type="button">Excluir</button>
+                    </td>
+                    <td
+                      data-testid={
+                        `${ADMIN_MANAGE__ELEMENT}-user-table-remove-${index}`
+                      }
+                    >
+                      <button type="button">Excluir</button>
 
-                  </td>
-                </tr>
-              );
-            })
+                    </td>
+                  </tr>
+                );
+              }))
           }
 
         </table>
