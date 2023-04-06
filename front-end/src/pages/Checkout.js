@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import React, { Component } from 'react';
 import { Header, OrderDetails } from '../components';
 import { createSale } from '../services/requests';
 import getLocalStorage from '../services/getLocalStorage';
 import { AppConsumer } from '../context/appContext';
 import getTotalPrice from '../utils/getTotalPrice';
+
+const marginSX = {
+  marginTop: '10px',
+  p: 2,
+};
 
 export default class Checkout extends Component {
   state = {
@@ -46,11 +51,11 @@ export default class Checkout extends Component {
         {({ setCarValue }) => (
           <div>
             <Header history={ history } />
-            <section>
+            <Container>
               <h3>Finalizar Pedido</h3>
               <OrderDetails setCarValue={ setCarValue } history={ history } />
-            </section>
-            <section>
+            </Container>
+            <Container sx={ marginSX }>
               <h3>Detalhes e Endereço para Entrega</h3>
               <div>
                 <span>P.Vendedora Responsável</span>
@@ -94,7 +99,7 @@ export default class Checkout extends Component {
               >
                 FINALIZAR PEDIDO
               </Button>
-            </section>
+            </Container>
           </div>
         )}
       </AppConsumer>
