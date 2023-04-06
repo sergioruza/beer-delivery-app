@@ -10,7 +10,8 @@ class RegisterService {
     this.model = User;
   }
 
-  async createUser({ name, email, password }) {
+  async createUser({ name, email, password, role }) {
+    console.log(role);
     validateRegister({ name, email, password });
 
     const users = await this.model.findAll();
@@ -18,7 +19,7 @@ class RegisterService {
     
     if (repetedUsers.length > 0) return { error: 'name or email already exists', status: 409 };
     const newUser = await this.model.create(
-        { name, email, password: md5(password), role: 'customer' },
+        { name, email, password: md5(password), role },
     );
      
     const token = await generateToken(

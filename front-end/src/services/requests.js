@@ -4,7 +4,12 @@ const api = axios.create({
   baseURL: `http://${process.env.REACT_APP_HOSTNAME || 'localhost'}:${process.env.REACT_APP_BACKEND_PORT || '3001'}`,
 });
 export const loginAPI = async (endpoint, body) => {
-  const { data } = await api.post(endpoint, body).catch((e) => e.response);
+  let payload = body;
+  if (!body.role) {
+    payload = { ...body, role: 'customer' };
+  }
+  console.log(payload);
+  const { data } = await api.post(endpoint, payload).catch((e) => e.response);
 
   return data;
 };
@@ -32,4 +37,14 @@ export const patchSale = async (endpoint, body) => {
   return data;
 };
 
+export const createUserAdm = async (endpoint, body, token) => {
+  let payload = body;
+  if (!body.role) {
+    payload = { ...body, role: 'customer' };
+  }
+  const headers = { headers: { Authorization: token } };
+  const { data } = await api.post(endpoint, payload, headers).catch((e) => e.response);
+
+  return data;
+};
 export default api;

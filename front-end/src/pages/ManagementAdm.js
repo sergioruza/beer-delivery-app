@@ -1,8 +1,11 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import NavBarAdm from '../components/NavBarAdm';
 import usersMock from '../utils/mocks/usersMock';
 import TableUsers from '../components/tableUsers';
 import validateFields from '../utils/validateFields';
+import Header from '../components/Header';
+import { createUserAdm } from '../services/requests';
+import getLocalStorage from '../services/getLocalStorage';
 
 export default class ManagementAdm extends Component {
   state = {
@@ -12,7 +15,13 @@ export default class ManagementAdm extends Component {
     inputPass: '',
     inputName: '',
     inputEmail: '',
+    invalidRegister: false,
   };
+
+  componentDidMount() {
+    const user = getLocalStorage('user', []);
+    this.setState({ user });
+  }
 
   validate = () => {
     const { inputName, inputEmail, inputPass } = this.state;
@@ -28,12 +37,38 @@ export default class ManagementAdm extends Component {
     this.setState({ [name]: value }, () => this.validate());
   };
 
+  onClickRegister = async () => {
+    const { inputName, inputEmail, inputPass, roleSelect, user } = this.state;
+    const payload = {
+      email: inputEmail, password: inputPass, name: inputName, role: roleSelect,
+    };
+
+    const create = await createUserAdm(
+      '/register',
+      payload,
+      user.token,
+    );
+    const { error } = create;
+    if (error) {
+      return this.setState({ invalidRegister: true });
+    }
+
+    this.setState({
+      btnDisable: true,
+      inputPass: '',
+      inputName: '',
+      inputEmail: '',
+      msg: 'Usuário cadastrado com sucesso',
+    });
+  };
+
   render() {
     const ADMIN_MANAGE = 'admin_manage__';
-    const { inputName, inputEmail, inputPass, roleSelect, msg, btnDisable } = this.state;
+    const { inputName, inputEmail, inputPass, roleSelect, msg, btnDisable, invalidRegister } = this.state;
+    const { history } = this.props;
     return (
       <div>
-        <NavBarAdm />
+        <Header history={ history } />
 
         <div>
 
@@ -86,6 +121,7 @@ export default class ManagementAdm extends Component {
             <button
               type="button"
               disabled={ btnDisable }
+              onClick={ this.onClickRegister }
               data-testid={ `${ADMIN_MANAGE}button-register` }
             >
               Cadastrar
@@ -94,6 +130,17 @@ export default class ManagementAdm extends Component {
 
             {
               btnDisable && <p>{ msg }</p>
+            }
+            {
+              invalidRegister
+              && (
+                <p
+                  data-testid={ `${ADMIN_MANAGE}element-invalid-register` }
+                >
+                  Nome ou email já existe
+
+                </p>
+              )
             }
           </div>
 
@@ -108,3 +155,7 @@ export default class ManagementAdm extends Component {
     );
   }
 }
+
+ManagementAdm.propTypes = {
+  history: PropTypes.shape(),
+}.isRequired;

@@ -9,6 +9,7 @@ class Header extends Component {
     const { history } = this.props;
     const type = history.location.pathname.split('/')[1];
     const { name } = getLocalStorage('user', { name: 'Matheus' });
+    const route = type === 'admin' ? 'manage' : 'customer';
 
     const ROUTE = 'customer_products';
     const PRODUCTS = 'element-navbar-link-products';
@@ -32,7 +33,7 @@ class Header extends Component {
         }
         <button
           type="button"
-          onClick={ () => history.push(`/${type}/orders`) }
+          onClick={ () => history.push(`/${type}/${route}`) }
           data-testid={ `${ROUTE}__${ORDERS}` }
         >
           { ROLETYPE }
