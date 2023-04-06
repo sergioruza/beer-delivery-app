@@ -91,6 +91,10 @@ export default class ManagementAdm extends Component {
               Cadastrar
 
             </button>
+
+            {
+              btnDisable && <p>{ msg }</p>
+            }
           </div>
 
           <div>
