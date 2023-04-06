@@ -23,7 +23,6 @@ body {
   display: flex;
   flex-basis: 70%;
   flex-wrap: wrap;
-  border: solid black 1px;
   justify-content: space-evenly;
   width: 90vw;
   margin-left: 5vw;
