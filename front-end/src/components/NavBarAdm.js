@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 
@@ -26,3 +27,7 @@ export default class NavBarAdm extends Component {
     );
   }
 }
+
+NavBarAdm.propTypes = {
+  name: PropTypes.string,
+}.isRequired;
