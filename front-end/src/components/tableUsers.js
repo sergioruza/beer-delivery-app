@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { getUsers } from '../services/requests';
+import { getUsers, deleteUsers } from '../services/requests';
 
 export default class TableUsers extends Component {
   state = {
@@ -20,11 +20,17 @@ export default class TableUsers extends Component {
     this.setState({ users });
   };
 
+  deleteUserReq = async (id) => {
+    const deleteUser = await deleteUsers(id);
+    if (deleteUsers.error) {
+      return this.setState({ errorMsg: deleteUser.erro });
+    }
+    this.setState({ errorMsg: deleteUser });
+  };
+
   render() {
     // const { users } = this.props;
     const { users, errorMsg } = this.state;
-    console.log(users);
-    const ADMIN_MANAGE = 'admin_manage__';
     const ADMIN_MANAGE__ELEMENT = 'admin_manage__element';
     let counter = 0;
     return (
@@ -77,7 +83,13 @@ export default class TableUsers extends Component {
                         `${ADMIN_MANAGE__ELEMENT}-user-table-remove-${index}`
                       }
                     >
-                      <button type="button">Excluir</button>
+                      <button
+                        onClick={ () => this.deleteUserReq(user.id) }
+                        type="button"
+                      >
+                        Excluir
+
+                      </button>
 
                     </td>
                   </tr>
