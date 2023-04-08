@@ -1,7 +1,7 @@
 .header-div {
   display: flex;
   justify-content: space-between;
-  height: 80px;
+  height: 5.5vh;
   background-color: #002c58;
 }
 
@@ -31,11 +31,11 @@
 }
 
 .logout-name-div {
-  background-color: #FE5C02;
+  background-color: #55beff;
 }
 
 .username-div {
-  width: 50%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +49,7 @@
   font-family: myFont;
   color: white;
   border: none;
-  width: 50%;
+  width: 30%;
   transition: 200ms ease-in-out;
 }
 

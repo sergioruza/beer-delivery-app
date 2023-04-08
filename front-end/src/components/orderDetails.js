@@ -9,6 +9,7 @@ import {
   TableCell,
   Button,
   Paper,
+  TableFooter,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import getLocalStorage from '../services/getLocalStorage';
@@ -65,8 +66,11 @@ export default class OrderDetails extends React.Component {
     const customerCheckoutPath = pathName[1] === 'customer' && pathName[2] === 'checkout';
 
     return (
-      <TableContainer component={ Paper } sx={ { width: '65vw', m: 'auto', p: 1 } }>
-        <Table>
+      <TableContainer
+        component={ Paper }
+        sx={ { width: 'auto', m: 'auto', maxHeight: 400 } }
+      >
+        <Table stickyHeader>
           <TableHead>
             <TableCell
               sx={ { textAlign: 'center', fontWeight: 'bold' } }
@@ -169,7 +173,10 @@ export default class OrderDetails extends React.Component {
                 )}
               </TableRow>
             ))}
+          </TableBody>
+          <TableFooter>
             <TableRow
+              stickyHeader
               data-testid={
                 `${COSTUMER}${ELEMENTORDER}-total-price`
               }
@@ -189,7 +196,7 @@ export default class OrderDetails extends React.Component {
                 {(+total).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </TableCell>
             </TableRow>
-          </TableBody>
+          </TableFooter>
         </Table>
       </TableContainer>
     );

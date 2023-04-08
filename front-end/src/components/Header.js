@@ -32,7 +32,7 @@ class Header extends Component {
                 onClick={ () => history.push(`/${actualRoute[1]}/products`) }
                 data-testid={ `${ROUTE}__${PRODUCTS}` }
               >
-                Produtos
+                PRODUTOS
               </button>
 
             )
@@ -53,7 +53,7 @@ class Header extends Component {
             <span
               data-testid={ `${ROUTE}__${FULLNAME}` }
             >
-              { name }
+              { name.toUpperCase() }
             </span>
           </div>
 
@@ -63,7 +63,7 @@ class Header extends Component {
             data-testid={ `${ROUTE}__${LOGOUT}` }
             onClick={ () => logout(history) }
           >
-            Sair
+            SAIR
           </button>
         </div>
       </div>
