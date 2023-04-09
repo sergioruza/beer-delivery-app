@@ -1,8 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Container, Button, Box } from '@mui/material';
 import { OrderDetails, Header } from '../components';
 import { getOrdersByUserId, patchSale } from '../services/requests';
 import getLocalStorage from '../services/getLocalStorage';
+
+const informationSX = {
+  fontSize: '1.1em',
+  color: 'white',
+};
 
 const emTransito = 'Em Trânsito';
 export default class Order extends Component {
@@ -42,66 +48,93 @@ export default class Order extends Component {
     return (
       <div>
         <Header history={ history } />
-        <div>
-          <div>
-            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}order-id` }>
+        <Container>
+          <Container
+            sx={ { display: 'flex', m: '40px 0', justifyContent: 'space-between' } }
+          >
+            <Box
+              component="span"
+              data-testid={ `${ROUTE}${ELEMENT_DETAILS}order-id` }
+              sx={ informationSX }
+            >
               {order.id}
-            </span>
+            </Box>
             {userType === 'customer' && (
-              <div>
+              <Box component="div" sx={ informationSX }>
                 P. Vend:
-                <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}seller-name` }>
+                {' '}
+                <Box
+                  component="span"
+                  data-testid={ `${ROUTE}${ELEMENT_DETAILS}seller-name` }
+                >
                   {order.sellerName}
-                </span>
-              </div>
+                </Box>
+              </Box>
             )}
-            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}order-date` }>
+            <Box
+              component="span"
+              data-testid={ `${ROUTE}${ELEMENT_DETAILS}order-date` }
+              sx={ informationSX }
+            >
               {formatedDate}
-            </span>
-            <span data-testid={ `${ROUTE}${ELEMENT_DETAILS}delivery-status` }>
+            </Box>
+            <Box
+              component="span"
+              data-testid={ `${ROUTE}${ELEMENT_DETAILS}delivery-status` }
+              sx={ informationSX }
+            >
               { status}
-            </span>
+            </Box>
             {userType === 'customer' && (
 
-              <button
+              <Button
+                variant="contained"
+                color="secondary"
                 type="button"
                 disabled={ status !== emTransito }
                 onClick={ () => this.updateStatus(order.id, 'Entregue') }
                 data-testid={ `${ROUTE}button-delivery-check` }
               >
                 {status !== 'Entregue' ? 'Marcar como entregue' : 'Ja foi entregue'}
-              </button>
+              </Button>
             )}
             {userType === 'seller' && (
-              <div>
-                <button
+              <Box component="div">
+                <Button
+                  variant="contained"
+                  color="secondary"
                   type="button"
                   onClick={ () => this.updateStatus(order.id, 'Preparando') }
                   data-testid="seller_order_details__button-preparing-check"
                   disabled={ status !== 'Pendente' }
                 >
                   PREPARAR PEDIDO
-                </button>
+                </Button>
 
-                <button
+                <Button
+                  variant="contained"
+                  color="secondary"
                   type="button"
                   onClick={ () => this.updateStatus(order.id, emTransito) }
                   data-testid="seller_order_details__button-dispatch-check"
                   disabled={ status !== 'Preparando' }
                 >
                   SAIU PARA ENTREGA
-                </button>
-              </div>
+                </Button>
+              </Box>
             )}
-          </div>
-        </div>
-        {
-          renderDetails && <OrderDetails
-            orderProducts={ order.products }
-            totalOrder={ order.totalPrice }
-            history={ history }
-          />
-        }
+          </Container>
+        </Container>
+        <Container>
+          {
+            renderDetails && (
+              <OrderDetails
+                orderProducts={ order.products }
+                totalOrder={ order.totalPrice }
+                history={ history }
+              />)
+          }
+        </Container>
 
       </div>
     );

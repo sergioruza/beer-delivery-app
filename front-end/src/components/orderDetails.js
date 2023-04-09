@@ -64,53 +64,55 @@ export default class OrderDetails extends React.Component {
     const ELEMENTORDER = 'element-order';
 
     const customerCheckoutPath = pathName[1] === 'customer' && pathName[2] === 'checkout';
-
+    const checkCol = { fontSize: '1.4em' };
     return (
       <TableContainer
         component={ Paper }
         sx={ { width: 'auto', m: 'auto', maxHeight: 400 } }
       >
-        <Table stickyHeader>
+        <Table stickyHeader sx={ { width: '100%' } }>
           <TableHead>
-            <TableCell
-              sx={ { textAlign: 'center', fontWeight: 'bold' } }
-              component="th"
-            >
-              Item
-            </TableCell>
-            <TableCell
-              sx={ { textAlign: 'center', fontWeight: 'bold' } }
-              component="th"
-            >
-              Descrição
-            </TableCell>
-            <TableCell
-              sx={ { textAlign: 'center', fontWeight: 'bold' } }
-              component="th"
-            >
-              Quantidade
-            </TableCell>
-            <TableCell
-              sx={ { textAlign: 'center', fontWeight: 'bold' } }
-              component="th"
-            >
-              Valor Unitário
-            </TableCell>
-            <TableCell
-              sx={ { textAlign: 'center', fontWeight: 'bold' } }
-              component="th"
-            >
-              Sub-total
-            </TableCell>
-            {customerCheckoutPath && (
+            <TableRow>
               <TableCell
-                align="center"
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
                 component="th"
-                sx={ { fontWeight: 'bold' } }
               >
-                Remover Item
+                Item
               </TableCell>
-            )}
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Descrição
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Quantidade
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Valor Unitário
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Sub-total
+              </TableCell>
+              {customerCheckoutPath && (
+                <TableCell
+                  align="center"
+                  component="th"
+                  sx={ { fontWeight: 'bold' } }
+                >
+                  Remover Item
+                </TableCell>
+              )}
+            </TableRow>
           </TableHead>
           <TableBody>
             {carProducts?.map((product, index) => (
@@ -133,7 +135,7 @@ export default class OrderDetails extends React.Component {
                   sx={ { textAlign: 'center', fontWeight: 'bold' } }
                   data-testid={ `${COSTUMER}${ELEMENTORDER}-table-name-${index}` }
                 >
-                  {product.title}
+                  {product.title ? product.title : product.name}
                 </TableCell>
                 <TableCell
                   sx={ { textAlign: 'center', fontWeight: 'bold' } }
@@ -181,18 +183,18 @@ export default class OrderDetails extends React.Component {
                 `${COSTUMER}${ELEMENTORDER}-total-price`
               }
             >
+              <TableCell colSpan={ 2 } />
               <TableCell
                 align="right"
-                colSpan={ 5 }
-                sx={ { fontSize: '1.4em' } }
-              >
-                Total
-              </TableCell>
+                colSpan={ 2 }
+                sx={ checkCol }
+              />
               <TableCell
                 align="center"
+                colSpan={ 1 }
                 sx={ { fontSize: '1.4em', color: 'primary.main' } }
               >
-                R$
+                Total: R$
                 {(+total).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </TableCell>
             </TableRow>
