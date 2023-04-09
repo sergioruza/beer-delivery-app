@@ -176,29 +176,31 @@ export default class OrderDetails extends React.Component {
               </TableRow>
             ))}
           </TableBody>
-          <TableFooter>
-            <TableRow
-              stickyHeader
-              data-testid={
-                `${COSTUMER}${ELEMENTORDER}-total-price`
-              }
-            >
-              <TableCell colSpan={ 2 } />
-              <TableCell
-                align="right"
-                colSpan={ 2 }
-                sx={ checkCol }
-              />
-              <TableCell
-                align="center"
-                colSpan={ 1 }
-                sx={ { fontSize: '1.4em', color: 'primary.main' } }
+          { customerCheckoutPath && (
+            <TableFooter>
+              <TableRow
+                stickyHeader
+                data-testid={
+                  `${COSTUMER}${ELEMENTORDER}-total-price`
+                }
               >
-                Total: R$
-                {(+total).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-              </TableCell>
-            </TableRow>
-          </TableFooter>
+                <TableCell colSpan={ 2 } />
+                <TableCell
+                  align="right"
+                  colSpan={ 2 }
+                  sx={ checkCol }
+                />
+                <TableCell
+                  align="center"
+                  colSpan={ 1 }
+                  sx={ { fontSize: '1.4em', color: 'primary.main' } }
+                >
+                  Total: R$
+                  {(+total).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </TableContainer>
     );

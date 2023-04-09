@@ -11,6 +11,16 @@ const informationSX = {
 };
 
 const emTransito = 'Em Trânsito';
+
+const totalSX = {
+  width: 'auto',
+  backgroundColor: 'white',
+  m: '20px auto',
+  textAlign: 'center',
+  fontSize: '2em',
+  boxSizing: 'border-box',
+};
+
 export default class Order extends Component {
   state = {
     order: {},
@@ -46,7 +56,7 @@ export default class Order extends Component {
     const formatedDate = new Date(order.saleDate).toLocaleDateString('pt-BR');
     const ELEMENT_DETAILS = 'element-order-details-label-';
     return (
-      <div>
+      <Box component="div">
         <Header history={ history } />
         <Container>
           <Container
@@ -135,8 +145,11 @@ export default class Order extends Component {
               />)
           }
         </Container>
-
-      </div>
+        <Container sx={ totalSX }>
+          Total: R$
+          { order.totalPrice}
+        </Container>
+      </Box>
     );
   }
 }
