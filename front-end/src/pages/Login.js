@@ -37,7 +37,7 @@ class Login extends React.Component {
 
     const roleExact = role === 'administrator' ? 'admin' : role;
     const rote = role === 'customer' ? 'products' : 'manage';
-    history.push(`/${roleExact}/${rote}`);
+    history.push(`/${roleExact}/${role === 'seller' ? 'orders' : rote}`);
   };
 
   handleChange = ({ target: { name, value } }) => {
