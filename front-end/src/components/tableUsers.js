@@ -4,28 +4,25 @@ import { deleteUsers } from '../services/requests';
 
 export default class TableUsers extends Component {
   state = {
-    errorMsg: '',
+
     usersState: [],
   };
 
   async componentDidMount() {
-    const { errorMsg, users } = this.props;
-    this.setState({ errorMsg, usersState: users });
+    const { users } = this.props;
+    this.setState({ usersState: users });
   }
 
   deleteUserReq = async (id) => {
-    const deleteUser = await deleteUsers(id);
-    if (deleteUsers.error) {
-      return this.setState({ errorMsg: deleteUser.erro });
-    }
+    await deleteUsers(id);
+
     const { usersState } = this.state;
     const deletePage = usersState.filter((user) => user.id !== id);
-    this.setState({ errorMsg: deleteUser, usersState: deletePage });
+    this.setState({ usersState: deletePage });
   };
 
   render() {
-    const { errorMsg, usersState } = this.state;
-    const { users } = this.props;
+    const { usersState } = this.state;
     const ADMIN_MANAGE__ELEMENT = 'admin_manage__element';
     let counter = 0;
     return (
