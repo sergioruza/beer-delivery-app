@@ -26,12 +26,14 @@ export default class ManagementAdm extends Component {
   }
 
   fetchUsers = async () => {
-    const users = await getUsers();
-    if (users.error) {
-      return this.setState({ errorMsg: users.error });
-    }
-    const filterAdm = users.filter((e) => e.role !== 'administrator');
-    this.setState({ users: filterAdm, loading: true });
+    this.setState({ loading: false }, async () => {
+      const users = await getUsers();
+      if (users.error) {
+        return this.setState({ errorMsg: users.error });
+      }
+      const filterAdm = users.filter((e) => e.role !== 'administrator');
+      this.setState({ users: filterAdm, loading: true });
+    });
   };
 
   validate = () => {
@@ -64,12 +66,15 @@ export default class ManagementAdm extends Component {
       return this.setState({ invalidRegister: true });
     }
 
+    const users = await this.fetchUsers();
+
     this.setState({
       btnDisable: true,
       inputPass: '',
       inputName: '',
       inputEmail: '',
       msg: 'Usuário cadastrado com sucesso',
+      users,
     });
   };
 
