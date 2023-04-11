@@ -3,6 +3,7 @@ import React from 'react';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
 import getTotalPrice from '../utils/getTotalPrice';
+import '../css/Products/ProductCard.css';
 
 class ProductCard extends React.Component {
   state = {
@@ -34,7 +35,6 @@ class ProductCard extends React.Component {
     }
 
     setLocalStorage('carrinho', carProducts);
-    console.log(getTotalPrice());
     setCarValue(getTotalPrice().toFixed(2));
   };
 
@@ -57,43 +57,61 @@ class ProductCard extends React.Component {
     const ROUTE = 'customer_products';
 
     return (
-      <div>
-        <span data-testid={ `${ROUTE}__element-card-price-${id}` }>
-          {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-        </span>
+      <div className="product-card">
         <img
+          className="product-img"
           width={ 200 }
           data-testid={ `${ROUTE}__img-card-bg-image-${id}` }
           src={ img }
           alt={ `${title}-img` }
         />
-        <span data-testid={ `${ROUTE}__element-card-title-${id}` }>{title}</span>
-        <div>
-          <button
-            data-testid={ `customer_products__button-card-rm-item-${id}` }
-            onClick={ () => this.decrement(counter - 1) }
-            type="button"
+        <div className="product-title-div">
+          <span
+            className="product-title"
+            data-testid={ `${ROUTE}__element-card-title-${id}` }
           >
-            -
-          </button>
+            {title}
 
-          <input
-            name="counter"
-            onChange={ this.handleChangeCounter }
-            max="99"
-            min="0"
-            type="number"
-            data-testid={ `customer_products__input-card-quantity-${id}` }
-            value={ counter }
-          />
+          </span>
+        </div>
+        <div className="quantity-price-div">
+          <div className="buttons-div">
+            <button
+              className="product-btn"
+              data-testid={ `customer_products__button-card-rm-item-${id}` }
+              onClick={ () => this.decrement(counter - 1) }
+              type="button"
+            >
+              -
+            </button>
+            <input
+              name="counter"
+              onChange={ this.handleChangeCounter }
+              className="product-input"
+              max="99"
+              min="0"
+              type="number"
+              data-testid={ `customer_products__input-card-quantity-${id}` }
+              value={ counter }
+            />
 
-          <button
-            data-testid={ `customer_products__button-card-add-item-${id}` }
-            onClick={ () => this.increment(counter + 1) }
-            type="button"
+            <button
+              className="product-btn"
+              data-testid={ `customer_products__button-card-add-item-${id}` }
+              onClick={ () => this.increment(counter + 1) }
+              type="button"
+            >
+              +
+            </button>
+          </div>
+          <span
+            className="product-price"
+            data-testid={ `${ROUTE}__element-card-price-${id}` }
           >
-            +
-          </button>
+            R$
+            {' '}
+            {Number(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </span>
         </div>
       </div>
     );

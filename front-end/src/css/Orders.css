@@ -1,0 +1,114 @@
+body {
+  background-color: #002c5889;
+}
+
+.card-order {
+  display: flex;
+  flex-direction: column;
+  border: solid #727171 2px;
+  align-items: center;
+  color: black;
+  margin: 10px;
+  width: 300px;
+  text-align: center;
+  border-radius: 15px;
+  height: 26vh;
+  background-color: #e6e6e6;
+  -webkit-filter: drop-shadow(0px 0px 20px rgba(0 0 0 / 60%)); 
+  filter: drop-shadow(6px 6px 4px rgba(0 0 0 / 60%));
+  transition: 150ms ease-in-out;
+}
+
+.orders-all-cards {
+  display: flex;
+  flex-basis: 70%;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 90vw;
+  margin-left: 5vw;
+  font-size: 125%;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: large;
+  font-weight: bold;
+}
+
+.order-placed {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.order-placed span {
+  margin-left: 6px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.primary-information {
+  background-color: #a8a8a8;
+}
+
+.primary-information span {
+  margin-left: 6px;
+}
+
+.text-details {
+  font-weight: 100;
+  height: 10%;
+}
+
+.id-div {
+  width: 100%;
+  background-color: #002c58;
+  border-radius: 10px 10px 0px 0px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: myFont;
+  height: 20%;
+}
+
+.order-details {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  font-family: myFont;
+  height: 37.5%;
+}
+
+.pendente-status, .preparando-status, .transito-status, .entregue-status {
+  height: 35%;
+  width: 95%;
+  margin-top: 2.5%;
+  border: #727171 solid 1px;
+  border-radius: 10px;
+  display: flex;
+  font-family: subTitle;
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.pendente-status {
+  background: linear-gradient(to top right, #fd8c4e, #FD5B03);
+}
+
+.preparando-status {
+  background: linear-gradient(to top right, #fec91b, #cb9c01);
+}
+
+.transito-status {
+  background: linear-gradient(to top right, #22cddd, #18909a);
+}
+
+.entregue-status {
+  background: linear-gradient(to top right, #71BA51, #4a8033);
+}
+
+.card-order:hover {
+  transform: scale(1.04);
+}

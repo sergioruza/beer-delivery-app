@@ -1,0 +1,89 @@
+.header-div {
+  display: flex;
+  justify-content: space-between;
+  height: 5.5vh;
+  background-color: #002c58;
+}
+
+.header-btn {
+  width: 50%;
+  height: 100%;
+  font-size: 15px;
+  font-family: myFont;
+  color: white;
+  border: none;
+  background-color: #002c58;
+  transition: 200ms ease-in-out;
+}
+
+.header-btn:disabled {
+  background-color: #0073e6;
+}
+
+.header-btn:not([disabled]):hover {
+  background-color: #0059b3;
+}
+
+.main-btns-div, .logout-name-div {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.logout-name-div {
+  background-color: #55beff;
+}
+
+.username-div {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-family: titleFont;
+}
+
+.logout-btn {
+  background-color: #D32F2F;
+  font-size: 18px;
+  font-family: myFont;
+  color: white;
+  border: none;
+  width: 30%;
+  transition: 200ms ease-in-out;
+}
+
+.logout-btn:hover {
+  background-color: #931f1f;
+}
+
+@media(max-width: 800px) {
+  .header-div {
+    height: 60px;
+  }
+  .main-btns-div, .logout-name-div {
+    width: 200px;
+  }
+  .logout-btn, .username-div, .header-btn {
+    font-size: 13px;
+  }
+  .logout-btn {
+    width: 30%;
+  }
+
+  .username-div {
+    width: 70%;
+  }
+}
+
+@media(max-width: 400px) {
+  .header-div {
+    height: 50px;
+  }
+  .main-btns-div, .logout-name-div {
+    width: 180px;
+  }
+  .logout-btn, .username-div, .header-btn {
+    font-size: 12px;
+  }
+}

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import getClassNameForStatus from '../utils/getClassNameForStatus';
 
 export default class SaleCard extends React.Component {
   render() {
@@ -15,34 +16,36 @@ export default class SaleCard extends React.Component {
     const FOUR = 4;
     return (
       <div>
-        <Link to={ href }>
-          <div>
+        <Link className="card-order" to={ href }>
+          <div className="id-div">
             Pedido:
             <span data-testid={ `${ROUTE}order-id-${id}` }>
               {id.toString().padStart(FOUR, '0')}
             </span>
           </div>
-          <span data-testid={ `${ROUTE}delivery-status-${id}` }>
-            {status}
-          </span>
-          <div>
-            <span data-testid={ `${ROUTE}order-date-${id}` }>
-              {formatedDate}
+          <div className={ getClassNameForStatus(status) }>
+            <span data-testid={ `${ROUTE}delivery-status-${id}` }>
+              {status}
             </span>
           </div>
-          <div>
-            R$:
-            <span data-testid={ `${ROUTE}card-price-${id}` }>
-              {Number(totalPrice).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-            </span>
+          <div className="order-details">
+            <text data-testid={ `${ROUTE}order-date-${id}` }>
+              {`Realizado em: ${formatedDate}`}
+            </text>
+
+            <text data-testid={ `${ROUTE}card-price-${id}` }>
+              {`Total: R$ ${Number(totalPrice)
+                .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
+            </text>
+
+            {
+              userType === 'seller' && (
+                <span data-testid={ `${ROUTE}card-address-${id}` }>
+                  {deliveryAddress}
+                </span>
+              )
+            }
           </div>
-          {
-            userType === 'seller' && (
-              <span data-testid={ `${ROUTE}card-address-${id}` }>
-                {deliveryAddress}
-              </span>
-            )
-          }
         </Link>
       </div>
     );

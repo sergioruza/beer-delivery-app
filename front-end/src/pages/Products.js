@@ -4,6 +4,7 @@ import { Header } from '../components';
 import ProductCard from '../components/ProductCard';
 import { AppConsumer } from '../context/appContext';
 import getTotalPrice from '../utils/getTotalPrice';
+import '../css/Products/Products.css';
 
 export default class Products extends Component {
   render() {
@@ -14,19 +15,20 @@ export default class Products extends Component {
           <div>
             <Header history={ history } />
             <button
+              className="go-to-car-btn"
               data-testid="customer_products__button-cart"
               onClick={ () => history.push('/customer/checkout') }
               disabled={ Number(getTotalPrice().toFixed(2)) === 0 }
               type="button"
             >
-              <div>
+              <div className="go-to-car-btn-div">
                 Ver Carrinho: R$
                 <span data-testid="customer_products__checkout-bottom-value">
                   {Number(carValue).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                 </span>
               </div>
             </button>
-            <section>
+            <div className="all-products-div">
               {listProducts?.map(({ price, urlImage, name, id }) => (
                 <ProductCard
                   setCarValue={ setCarValue }
@@ -37,7 +39,7 @@ export default class Products extends Component {
                   id={ id }
                 />
               )) }
-            </section>
+            </div>
           </div>
         )}
       </AppConsumer>

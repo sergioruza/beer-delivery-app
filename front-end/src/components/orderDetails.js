@@ -1,8 +1,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Button,
+  Paper,
+  TableFooter,
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import getLocalStorage from '../services/getLocalStorage';
 import setLocalStorage from '../services/setLocalStorage';
 import getTotalPrice from '../utils/getTotalPrice';
+
+const hoverSX = {
+  textAlign: 'center',
+  '&:hover': {
+    backgroundColor: 'rgba(50, 201, 245, 0.2)',
+  },
+};
 
 export default class OrderDetails extends React.Component {
   state = {
@@ -45,57 +64,145 @@ export default class OrderDetails extends React.Component {
     const ELEMENTORDER = 'element-order';
 
     const customerCheckoutPath = pathName[1] === 'customer' && pathName[2] === 'checkout';
-
+    const checkCol = { fontSize: '1.4em' };
     return (
-      <div>
-        <table>
-          <tr>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>Sub-total</th>
-            {customerCheckoutPath && <th>Remover Item</th>}
-          </tr>
-          {carProducts?.map((product, index) => (
-            <tr key={ index }>
-              <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-item-number-${index}` }>
-                {index + 1}
-              </td>
-              <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-name-${index}` }>
-                {product.title}
-              </td>
-              <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-quantity-${index}` }>
-                {product.quantity}
-              </td>
-              <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-unit-price-${index}` }>
-                {(+product.price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-              </td>
-              <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-sub-total-${index}` }>
-                {Number(product.price * product.quantity)
-                  .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-              </td>
+      <TableContainer
+        component={ Paper }
+        sx={ { width: 'auto', m: 'auto', maxHeight: 400 } }
+      >
+        <Table stickyHeader sx={ { width: '100%' } }>
+          <TableHead>
+            <TableRow>
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Item
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Descrição
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Quantidade
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Valor Unitário
+              </TableCell>
+              <TableCell
+                sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                component="th"
+              >
+                Sub-total
+              </TableCell>
               {customerCheckoutPath && (
-                <td data-testid={ `${COSTUMER}${ELEMENTORDER}-table-remove-${index}` }>
-                  <button
-                    type="button"
-                    onClick={ () => this.removeItem(product.id) }
-                  >
-                    Remover
-                  </button>
-                </td>
+                <TableCell
+                  align="center"
+                  component="th"
+                  sx={ { fontWeight: 'bold' } }
+                >
+                  Remover Item
+                </TableCell>
               )}
-            </tr>
-          ))}
-        </table>
-        <div>
-          Total: R$
-          <span data-testid={ `${COSTUMER}${ELEMENTORDER}-total-price` }>
-            {(+total).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-          </span>
-        </div>
-
-      </div>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {carProducts?.map((product, index) => (
+              <TableRow key={ index } sx={ hoverSX }>
+                <TableCell
+                  sx={ {
+                    textAlign: 'center',
+                    backgroundColor: 'primary.main',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: '1.2em',
+                  } }
+                  data-testid={
+                    `${COSTUMER}${ELEMENTORDER}-table-item-number-${index}`
+                  }
+                >
+                  {index + 1}
+                </TableCell>
+                <TableCell
+                  sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                  data-testid={ `${COSTUMER}${ELEMENTORDER}-table-name-${index}` }
+                >
+                  {product.title ? product.title : product.name}
+                </TableCell>
+                <TableCell
+                  sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                  data-testid={ `${COSTUMER}${ELEMENTORDER}-table-quantity-${index}` }
+                >
+                  {product.quantity}
+                </TableCell>
+                <TableCell
+                  sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                  data-testid={ `${COSTUMER}${ELEMENTORDER}-table-unit-price-${index}` }
+                >
+                  { (+product.price)
+                    .toLocaleString('pt-BR', { minimumFractionDigits: 2 }) }
+                </TableCell>
+                <TableCell
+                  sx={ { textAlign: 'center', fontWeight: 'bold' } }
+                  data-testid={ `${COSTUMER}${ELEMENTORDER}-table-sub-total-${index}` }
+                >
+                  {Number(product.price * product.quantity)
+                    .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </TableCell>
+                {customerCheckoutPath && (
+                  <TableCell
+                    align="center"
+                    data-testid={ `${COSTUMER}${ELEMENTORDER}-table-remove-${index}` }
+                  >
+                    <Button
+                      startIcon={ <DeleteIcon /> }
+                      variant="contained"
+                      color="error"
+                      type="button"
+                      onClick={ () => this.removeItem(product.id) }
+                    >
+                      Remover
+                    </Button>
+                  </TableCell>
+                )}
+              </TableRow>
+            ))}
+          </TableBody>
+          { customerCheckoutPath && (
+            <TableFooter>
+              <TableRow
+                stickyHeader
+                data-testid={
+                  `${COSTUMER}${ELEMENTORDER}-total-price`
+                }
+              >
+                <TableCell colSpan={ 2 } />
+                <TableCell
+                  align="right"
+                  colSpan={ 2 }
+                  sx={ checkCol }
+                />
+                <TableCell
+                  align="center"
+                  colSpan={ 1 }
+                  sx={ { fontSize: '1.4em', color: 'primary.main' } }
+                >
+                  Total: R$
+                  {(+total).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
+        </Table>
+      </TableContainer>
     );
   }
 }

@@ -4,6 +4,7 @@ import SaleCard from '../components/orderCard';
 import getLocalStorage from '../services/getLocalStorage';
 import { getOrdersByUserId } from '../services/requests';
 import { Header } from '../components';
+import '../css/Orders.css';
 
 export default class Orders extends React.Component {
   state = {
@@ -22,9 +23,11 @@ export default class Orders extends React.Component {
     return (
       <div>
         <Header history={ history } />
-        {
-          orders.map((s) => <SaleCard key={ s.id } details={ s } history={ history } />)
-        }
+        <div className="orders-all-cards">
+          {
+            orders.map((s) => <SaleCard key={ s.id } details={ s } history={ history } />)
+          }
+        </div>
       </div>
     );
   }
