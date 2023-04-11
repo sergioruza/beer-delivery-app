@@ -10,7 +10,6 @@ class Header extends Component {
     const { history } = this.props;
     const actualRoute = history.location.pathname.split('/');
     const { name } = getLocalStorage('user', { name: 'Matheus' });
-    const route = (type === 'customer' || type === 'seller') ? 'orders' : 'manage';
     const ROLETYPE = getOrderType(actualRoute[1]);
 
     //  data-test-ids
