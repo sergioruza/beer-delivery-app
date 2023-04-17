@@ -18,9 +18,6 @@ $ git clone git@github.com:sergioruza/beer-delivery-app.git
 # Acesse a pasta
 $ cd beer-delivery-app
 
-# Instale as dependências do front-end e back-end
-$ npm i
-
 # Rode a aplicação frontend
 $ cd ./front-end
 $ npm i
@@ -29,9 +26,6 @@ $ npm start
 #You can now view frontend in the browser.
 #  Local:            http://localhost:300?
 
-# Suba o contêiner do mongoDB
-$ docker-compose up -d
-
 # Rode a aplicação back-end
 $ cd ./back-end
 $ npm i
@@ -39,6 +33,8 @@ $ npm run dev
 # [nodemon] starting `node .`
 # Api rodando na porta 3001
 
+# Suba o contêiner do mongoDB
+$ docker-compose up -d
 
 # Vá até a pasta backend e popule o banco
 $ cd ./back-end
