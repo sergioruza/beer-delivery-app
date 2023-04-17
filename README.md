@@ -89,31 +89,31 @@ Respeitando a proposta, o sistema deverá atender os seguintes requisitos:
 </details>
 
 [javascript]: https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javaScript&logoColor=white
-[javascript-url]: https://railway.app/
+[javascript-url]: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps
 
 [nodejs]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
-[nodejs-url]: https://railway.app/
+[nodejs-url]: https://nodejs.org/en/docs
 
 [express]: https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white
-[express-url]: https://railway.app/
+[express-url]: https://expressjs.com/pt-br/
 
 [sequelize]: https://img.shields.io/badge/sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white
-[sequelize-url]: https://railway.app/
+[sequelize-url]: https://sequelize.org/
 
 [mysql]: https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white
-[mysql-url]: https://railway.app/
+[mysql-url]: https://www.mysql.com/
 
 [mocha]: https://img.shields.io/badge/mocha-8D6748?style=for-the-badge&logo=mocha&logoColor=white
-[mocha-url]: https://railway.app/
+[mocha-url]: https://mochajs.org/
 
 [react]: https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white
-[react-url]: https://railway.app/
+[react-url]: https://react.dev/
 
 [MUI]: https://img.shields.io/badge/mui-007FFF?style=for-the-badge&logo=mui&logoColor=white
-[MUI-url]: https://railway.app/
+[MUI-url]: https://mui.com/
 
 [axios]: https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white
-[axios-url]: https://railway.app/
+[axios-url]: https://www.npmjs.com/package/axios
 
 
 
