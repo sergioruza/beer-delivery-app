@@ -55,7 +55,7 @@ export const getUsers = async () => {
   const { data } = await api.get('/users').catch((e) => e.response);
   return data;
 };
-
+// sglkn sdfgkjngsoipd
 export const deleteUsers = async (id) => {
   const { data } = await api.delete(`/users/${id}`).catch((e) => e.response);
   return data;
